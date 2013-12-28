@@ -730,7 +730,7 @@
                         <xsl:when test="$result != &quot;Pass&quot;">-</xsl:when>
                         <xsl:otherwise>
                           <xsl:choose>
-                            <xsl:when test="$open.description='yes'">-</xsl:when>
+                            <xsl:when test="$open.description='no'">-</xsl:when>
                             <xsl:otherwise>+</xsl:otherwise>
                           </xsl:choose>
                         </xsl:otherwise>
@@ -794,7 +794,7 @@
                         </xsl:when>
                         <xsl:otherwise>
                           <xsl:choose>
-                            <xsl:when test="$open.description = 'yes'">
+                            <xsl:when test="$open.description = 'no'">
                               <xsl:attribute name="style">display:block</xsl:attribute>
                             </xsl:when>
                             <xsl:otherwise>

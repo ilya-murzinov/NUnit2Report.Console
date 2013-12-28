@@ -46,11 +46,28 @@
 				border-bottom:#9c9c9c 1px solid;
 				border-right:#9c9c9c 1px solid;
 			}
-
+      
+      .noborder{
+        border:0;
+        border-spacing:0;
+        border-color:white;
+      }
+      
+      td.noborder{
+        BORDER-BOTTOM: #dcdcdc 0px solid; 
+				BORDER-RIGHT: #dcdcdc 0px solid;
+        BORDER-TOP: #dcdcdc 0px solid;
+        BORDER-LEFT: #dcdcdc 0px solid;
+      }
+      
 			td {
 				FONT-SIZE: 68%;
 				BORDER-BOTTOM: #dcdcdc 1px solid; 
 				BORDER-RIGHT: #dcdcdc 1px solid;
+        BORDER-TOP: #dcdcdc 1px solid;
+        BORDER-LEFT: #dcdcdc 1px solid;
+        padding-left:3px;
+        padding-right:3px;
 			}
 			p {
 				line-height:1.5em;
@@ -59,12 +76,12 @@
 			}
 			h1 {
 				MARGIN: 0px 0px 5px; 
-				FONT: 165% verdana,arial,helvetica;
+				FONT: bold 200% verdana,arial,helvetica;
 			}
 			h2 {
 				MARGIN-TOP: 1em; 
 				MARGIN-BOTTOM: 0.5em; 
-				FONT: bold 125% verdana,arial,helvetica;
+				FONT: bold 145% verdana,arial,helvetica;
 			}
 			h3 {
 				MARGIN-BOTTOM: 0.5em; 
@@ -82,6 +99,9 @@
 				MARGIN-BOTTOM: 0.5em; 
 				FONT: bold 100% verdana,arial,helvetica
 			}	
+      .exception{
+        display:none;
+      }
 			.Error {
 				font-weight:bold; 
 			}
@@ -97,8 +117,10 @@
 				padding-left: 2.0em;
 				background:#cdcdcd;
 			}
-			.Pass {
-				padding-left:2px;
+      .Pass{
+				font-weight:bold; 
+				color:green;
+				text-decoration: none;
 			}
 			.TableHeader {
 				background: #efefef;
@@ -110,10 +132,6 @@
 				color: #0000ff;
 			}
 			a {
-				color: #0000ff;
-			}
-			a:active {
-				color: #800000;
 			}
 			a.summarie {
 				color:#000;
@@ -133,32 +151,30 @@
 				background-color:#dcdcdc;
 				color:#000;
 				font-weight:normal;
+			}   
+      a.Pass {
+				font-weight:bold; 
+				color:green;
 			}
-			.method{
-				color:#000;
-				font-weight:normal;
-				padding-left:5px;
+      a.Pass:active {
+				font-weight:bold; 
+				color:green;
 			}
-			a.method{
-				text-decoration: none;
-				color:#000;
-				font-weight:normal;
-				padding-left:5px;
+			a.Pass:visited {
+				font-weight:bold; 
+				color:green;
 			}
 			a.Failure {
 				font-weight:bold; 
 				color:red;
-				text-decoration: none;
 			}
 			a.Failure:visited {
 				font-weight:bold; 
 				color:red;
-				text-decoration: none;
 			}
 			a.Failure:active {
 				font-weight:bold; 
 				color:red;
-				text-decoration: none;
 			}
 			a.error {
 				font-weight:bold; 
@@ -189,11 +205,27 @@
 				text-decoration: none;
 				padding-left:5px;
 			}
+      .excellent{
+      color:green;
+      font-weight:bold; 
+      }      
+      .good{
+      color:orange;
+      font-weight:bold; 
+      }
+      .average{
+      color:orange;
+      font-weight:bold; 
+      }
+      .bad{
+      color:red;
+      font-weight:bold; 
+      }
+      
 	  </style>
       <script language="JavaScript"><![CDATA[   
 	  function Toggle(id) {
 	  var element = document.getElementById(id);
-
 		 if ( element.style.display == "none" )
 			element.style.display = "block";
 		 else 
@@ -263,7 +295,7 @@
 							<xsl:otherwise>Pass</xsl:otherwise>
 						</xsl:choose>
 					</xsl:attribute> 	
-					<td width="25%">
+					<td width="50%">
 						<a href="#{generate-id(@name)}">
 						<xsl:attribute name="class">
 							<xsl:choose>
@@ -273,7 +305,10 @@
 						<xsl:value-of select="@name"/>
 						</a>
 					</td>
-					<td nowrap="nowrap" width="6%" align="right">
+          <td width="10%"><xsl:value-of select="$runCount"/></td>
+					<td width="10%"><xsl:value-of select="$errorCount"/></td>
+					<td width="10%"><xsl:value-of select="$failureCount"/></td>
+					<td nowrap="nowrap" width="10%" align="right">
 						<xsl:variable name="successRate" select="$runCount div $testCount"/>
 						<b>
 						<xsl:call-template name="display-percent">
@@ -281,7 +316,7 @@
 						</xsl:call-template>
 						</b>
 					</td>
-					<td width="20%" height="9px">
+					<!--<td>
 						<xsl:if test="round($runCount * 200 div $testCount )!=0">
 							<span class="covered">
 								<xsl:attribute name="style">width:<xsl:value-of select="round($runCount * 200 div $testCount )"/>px</xsl:attribute>
@@ -297,14 +332,11 @@
 								<xsl:attribute name="style">width:<xsl:value-of select="round($failureCount * 200 div $testCount )"/>px</xsl:attribute>
 							</span>
 						</xsl:if>
-					</td>
-					<td><xsl:value-of select="$runCount"/></td>
-					<td><xsl:value-of select="$errorCount"/></td>
-					<td><xsl:value-of select="$failureCount"/></td>
-					<td>
-                       <xsl:call-template name="display-time">
-                        	<xsl:with-param name="value" select="$timeCount"/>
-                        </xsl:call-template>				
+					</td>-->
+					<td width="10%" align="right">
+            <xsl:call-template name="display-time">
+              <xsl:with-param name="value" select="$timeCount"/>
+            </xsl:call-template>				
 					</td>					
 				</tr>
 			</xsl:for-each>

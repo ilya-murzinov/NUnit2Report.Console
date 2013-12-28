@@ -97,34 +97,37 @@
     <h1>
       <span id=":i18n:UnitTestsResults">Unit Tests Results</span> <xsl:value-of select="$nant.project.name"/>
     </h1>
-    <table width="100%">
+    <table width="95%">
       <tr>
-        <td align="left">
+        <td class="noborder" width="50%" align="left">
           <span id=":i18n:GeneratedBy">Generated  on: </span><xsl:value-of select="@date"/> - <xsl:value-of select="concat(@time,' ')"/> <a href="#envinfo" id=":i18n:EnvironmentInformation">Environment Information</a>
         </td>
-        <td align="right">
+        <td class="noborder" width="50%" align="right">
           <span id=":i18n:Designed">Designed for use with </span> <a href='http://nunit.sourceforge.net/'>NUnit.</a>
         </td>
       </tr>
     </table>
-    <hr size="1"/>
+    <hr size="1" width="95%" align="left"/>
   </xsl:template>
 
   <xsl:template name="summaryHeader">
     <tr valign="top" class="TableHeader">
-      <td width="50px">
+      <td width="50%">
+        <b id=":i18n:Name">Name</b>
+      </td>
+      <td width="10%">
         <b id=":i18n:Tests">Tests</b>
       </td>
-      <td width="70px">
+      <td width="10%">
         <b id=":i18n:Failures">Failures</b>
       </td>
-      <td width="70px">
+      <td width="10%">
         <b id=":i18n:Errors">Errors</b>
       </td>
-      <td colspan="2">
+      <td width="10%">
         <b id=":i18n:SuccessRate">Success Rate</b>
       </td>
-      <td width="70px" nowrap="nowrap">
+      <td width="10%" nowrap="nowrap">
         <b id=":i18n:Time">Time(s)</b>
       </td>
     </tr>
@@ -137,17 +140,20 @@
 -->
   <xsl:template name="packageSummaryHeader">
     <tr class="TableHeader" valign="top">
-      <td width="75%" colspan="3">
+      <td width="50%">
         <b id=":i18n:Name">Name</b>
       </td>
-      <td width="5%">
+      <td width="10%">
         <b id=":i18n:Tests">Tests</b>
       </td>
-      <td width="5%">
+      <td width="10%">
         <b id=":i18n:Errors">Errors</b>
       </td>
-      <td width="5%">
+      <td width="10%">
         <b id=":i18n:Failures">Failures</b>
+      </td>
+      <td width="10%">
+        <b id=":i18n:SuccessRate">Success Rate</b>
       </td>
       <td width="10%" nowrap="nowrap">
         <b id=":i18n:Time">Time(s)</b>
@@ -161,17 +167,19 @@
 		=====================================================================
 -->
   <xsl:template name="classesSummaryHeader">
+    <table border="0" cellpadding="2" cellspacing="0" width="95%">
     <tr class="TableHeader" valign="top">
-      <td width="85%" colspan="2">
+      <td width="80%">
         <b id=":i18n:Name">Name</b>
       </td>
       <td width="10%">
         <b id=":i18n:Status">Status</b>
       </td>
-      <td width="5%" nowrap="nowrap">
+      <td width="10%" nowrap="nowrap">
         <b id=":i18n:Time">Time(s)</b>
       </td>
     </tr>
+    </table>
   </xsl:template>
 
   <!--
@@ -184,74 +192,42 @@
 -->
   <xsl:template name="summary">
     <h2 id=":i18n:Summary">Summary</h2>
-    <xsl:variable name="runCount" select="@total"/>
-    <xsl:variable name="failureCount" select="@failures"/>
-    <xsl:variable name="ignoreCount" select="@not-run"/>
-    <xsl:variable name="total" select="$runCount + $ignoreCount + $failureCount"/>
-
+    <xsl:variable name="name" select="@name"/>
+    <xsl:variable name="total" select="@total"/>
+    <xsl:variable name="failures" select="@errors"/>
+    <xsl:variable name="errors" select="@failures"/>
     <xsl:variable name="timeCount" select="translate(test-suite/@time,',','.')"/>
-
-    <xsl:variable name="successRate" select="$runCount div $total"/>
+    <xsl:variable name="successRate" select="($total - $failures - $errors) div $total"/>
+    
     <table border="0" cellpadding="2" cellspacing="0" width="95%" style="border: #dcdcdc 1px solid;">
       <xsl:call-template name="summaryHeader"/>
       <tr valign="top">
         <xsl:attribute name="class">
           <xsl:choose>
-            <xsl:when test="$failureCount &gt; 0">Failure</xsl:when>
-            <xsl:when test="$ignoreCount &gt; 0">Error</xsl:when>
-            <xsl:otherwise>Pass</xsl:otherwise>
+            <xsl:when test="$successRate &gt; 0.95">excellent</xsl:when>
+            <xsl:when test="$successRate &gt; 0.85 and $successRate &lt; 0.95">good</xsl:when>
+            <xsl:when test="$successRate &gt; 0.75 and $successRate &lt; 0.85">average</xsl:when>
+            <xsl:otherwise>bad</xsl:otherwise>
           </xsl:choose>
         </xsl:attribute>
-        <td>
-          <xsl:value-of select="$runCount"/>
+        <td width="50%">
+          <xsl:value-of select="$name"/>
         </td>
-        <td>
-          <xsl:value-of select="$failureCount"/>
+        <td width="10%">
+          <xsl:value-of select="$total"/>
         </td>
-        <td>
-          <xsl:value-of select="$ignoreCount"/>
+        <td width="10%">
+          <xsl:value-of select="$failures"/>
         </td>
-        <td nowrap="nowrap" width="70px">
+        <td width="10%">
+          <xsl:value-of select="$errors"/>
+        </td>
+        <td nowrap="nowrap" width="10%" align="right">
           <xsl:call-template name="display-percent">
             <xsl:with-param name="value" select="$successRate"/>
           </xsl:call-template>
         </td>
-        <td>
-          <xsl:if test="round($runCount * 200 div $total )!=0">
-            <span class="covered">
-              <xsl:attribute name="style">
-                width:<xsl:value-of select="round($runCount * 200 div $total )"/>px
-              </xsl:attribute>
-              <xsl:call-template name="for.loop">
-                <xsl:with-param name="i">1</xsl:with-param>
-                <xsl:with-param name="count">
-                  <xsl:value-of select="round($runCount * 10 div $total )"/>
-                </xsl:with-param>
-              </xsl:call-template>
-            </span>
-          </xsl:if>
-          <xsl:if test="round($ignoreCount * 200 div $total )!=0">
-            <span class="ignored">
-              <xsl:attribute name="style">
-                width:<xsl:value-of select="round($ignoreCount * 200 div $total )"/>px
-              </xsl:attribute>
-            </span>
-          </xsl:if>
-          <xsl:if test="round($failureCount * 200 div $total )!=0">
-            <span class="uncovered">
-              <xsl:attribute name="style">
-                width:<xsl:value-of select="round($failureCount * 200 div $total )"/>px
-              </xsl:attribute>
-              <xsl:call-template name="for.loop">
-                <xsl:with-param name="i">1</xsl:with-param>
-                <xsl:with-param name="count">
-                  <xsl:value-of select="round($runCount * 10 div $total )"/>
-                </xsl:with-param>
-              </xsl:call-template>
-            </span>
-          </xsl:if>
-        </td>
-        <td>
+        <td  width="10%" align="right">
           <xsl:call-template name="display-time">
             <xsl:with-param name="value" select="$timeCount"/>
           </xsl:call-template>
@@ -292,12 +268,13 @@
     </xsl:variable>
 
     <xsl:variable name="newid" select="generate-id(@name)" />
+    <table border="0" cellpadding="2" cellspacing="0" width="95%">
     <tr valign="top">
       <xsl:attribute name="class">
         <xsl:value-of select="$result"/>
       </xsl:attribute>
 
-      <td width="20%" >
+      <td width="80%">
         <xsl:choose>
           <xsl:when test="$summary.xml != ''">
             <!-- Triangle image -->
@@ -313,7 +290,7 @@
                 <xsl:when test="$result != &quot;Pass&quot;">-</xsl:when>
                 <xsl:otherwise>
                   <xsl:choose>
-                    <xsl:when test="$open.description='yes'">-</xsl:when>
+                    <xsl:when test="$open.description='no'">-</xsl:when>
                     <xsl:otherwise>+</xsl:otherwise>
                   </xsl:choose>
                 </xsl:otherwise>
@@ -342,67 +319,18 @@
             </a>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:attribute name="class">method</xsl:attribute>
+            <xsl:attribute name="class">Pass</xsl:attribute>
             <xsl:value-of select="nunit2report:TestCaseName(./@name)"/>
           </xsl:otherwise>
         </xsl:choose>
       </td>
-      <td width="65%" style="padding-left:3px" height="9px">
-        <xsl:choose>
-          <xsl:when test="$result = 'Pass'">
-            <span class="covered" style="width:200px">
-              <xsl:call-template name="for.loop">
-                <xsl:with-param name="i">1</xsl:with-param>
-                <xsl:with-param name="count">
-                  10
-                </xsl:with-param>
-              </xsl:call-template>
-            </span>
-          </xsl:when>
-          <xsl:when test="$result = 'Ignored'">
-            <span class="ignored" style="width:200px"></span>
-          </xsl:when>
-          <xsl:when test="$result = 'Failure' or $result = 'Error'">
-            <span class="uncovered" style="width:200px"></span>
-          </xsl:when>
-        </xsl:choose>
-        <!-- The test method description-->
-        <xsl:choose>
-          <xsl:when test="$summary.xml != ''">
-            <div class="description" style="display:block">
-              <!-- Attribute id -->
-              <xsl:attribute name="id">
-                <xsl:value-of select="concat('M:',$newid)"/>
-              </xsl:attribute>
-              <!-- Open method description if failure -->
-              <xsl:choose>
-                <xsl:when test="$result != &quot;Pass&quot;">
-                  <xsl:attribute name="style">display:block</xsl:attribute>
-                </xsl:when>
-                <xsl:otherwise>
-                  <xsl:choose>
-                    <xsl:when test="$open.description = 'yes'">
-                      <xsl:attribute name="style">display:block</xsl:attribute>
-                    </xsl:when>
-                    <xsl:otherwise>
-                      <xsl:attribute name="style">display:none</xsl:attribute>
-                    </xsl:otherwise>
-                  </xsl:choose>
-                </xsl:otherwise>
-              </xsl:choose>
-              <!-- The description of the test method -->
-              <xsl:value-of select="normalize-space($summaries//member[@name=$Mname]/summary/text())"/>
-            </div>
-          </xsl:when>
-        </xsl:choose>
-      </td>
-      <td>
+      <td width="10%">
         <xsl:attribute name="id">
           :i18n:<xsl:value-of select="$result"/>
         </xsl:attribute>
         <xsl:value-of select="$result"/>
       </td>
-      <td>
+      <td width="10%">
         <xsl:call-template name="display-time">
           <xsl:with-param name="value" select="@time"/>
         </xsl:call-template>
@@ -410,7 +338,7 @@
     </tr>
 
     <xsl:if test="$result != &quot;Pass&quot;">
-      <tr style="display: block;">
+      <tr style="display: none;">
         <xsl:attribute name="id">
           <xsl:value-of select="$newid"/>
         </xsl:attribute>
@@ -421,6 +349,7 @@
         </td>
       </tr>
     </xsl:if>
+  </table>
   </xsl:template>
 
   <!-- Note : the below template error and failure are the same style
@@ -461,7 +390,7 @@
   <xsl:template name="envinfo">
     <a name="envinfo"></a>
     <h2 id=":i18n:EnvironmentInformation">Environment Information</h2>
-    <table border="0" cellpadding="5" cellspacing="2" width="95%">
+    <table border="0" cellpadding="2" cellspacing="0" width="95%">
       <tr class="TableHeader">
         <td id=":i18n:Property">Property</td>
         <td id=":i18n:Value">Value</td>
