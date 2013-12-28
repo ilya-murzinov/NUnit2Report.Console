@@ -30,6 +30,11 @@ namespace NUnit2Report.Console
         /// <summary>
         /// French language
         /// </summary>
-        French
+        French,
+
+        /// <summary>
+        /// French language
+        /// </summary>
+        Russian
     }
 }

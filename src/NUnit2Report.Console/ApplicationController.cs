@@ -126,7 +126,7 @@ namespace NUnit2Report.Console
             if (!string.IsNullOrWhiteSpace(this.Options.Language))
             {
                 Condition.Requires(this.Options.Language.ToLower().Trim())
-                    .Evaluate(x => x.Contains("en") || x.Contains("fr"));
+                    .Evaluate(x => x.Contains("en") || x.Contains("fr") || x.Contains("ru"));
             }
         }
 
@@ -152,6 +152,9 @@ namespace NUnit2Report.Console
                     break;
                 case "fr":
                     reportGenerator.Language = ReportLanguage.French;
+                    break;
+                case "ru":
+                    reportGenerator.Language = ReportLanguage.Russian;
                     break;
             }
 

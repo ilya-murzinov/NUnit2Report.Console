@@ -41,6 +41,9 @@ namespace NUnit2Report.Console
                 case ReportLanguage.French:
                     language = "fr";
                     break;
+                case ReportLanguage.Russian:
+                    language = "ru";
+                    break;
             }
 
             return language;

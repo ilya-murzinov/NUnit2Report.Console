@@ -189,7 +189,7 @@ namespace NUnit2Report.Console
 
             // create the index.html
             var stream = new StringReader("<xsl:stylesheet xmlns:xsl='http://www.w3.org/1999/XSL/Transform' version='1.0' >" +
-                "<xsl:output method='html' indent='yes' encoding='ISO-8859-1'/>" +
+                "<xsl:output method='html' indent='yes' encoding='utf-8'/>" +
                 "<xsl:include href=\"" + this.xslFrameDefintionFilePath + "\"/>" +
                 "<xsl:template match=\"test-results\">" +
                 "   <xsl:call-template name=\"index.html\"/>" +
@@ -199,7 +199,7 @@ namespace NUnit2Report.Console
 
             // create the stylesheet.css
             stream = new StringReader("<xsl:stylesheet xmlns:xsl='http://www.w3.org/1999/XSL/Transform' version='1.0' >" +
-                "<xsl:output method='html' indent='yes' encoding='ISO-8859-1'/>" +
+                "<xsl:output method='html' indent='yes' encoding='utf-8'/>" +
                 "<xsl:include href=\"" + this.xslFrameDefintionFilePath + "\"/>" +
                 "<xsl:template match=\"test-results\">" +
                 "   <xsl:call-template name=\"stylesheet.css\"/>" +
@@ -209,7 +209,7 @@ namespace NUnit2Report.Console
 
             // create the overview-summary.html at the root
             stream = new StringReader("<xsl:stylesheet xmlns:xsl='http://www.w3.org/1999/XSL/Transform' version='1.0' >" +
-                "<xsl:output method='html' indent='yes' encoding='ISO-8859-1'/>" +
+                "<xsl:output method='html' indent='yes' encoding='utf-8'/>" +
                 "<xsl:include href=\"" + this.xslFrameDefintionFilePath + "\"/>" +
                 "<xsl:template match=\"test-results\">" +
                 "    <xsl:call-template name=\"overview.packages\"/>" +
@@ -219,7 +219,7 @@ namespace NUnit2Report.Console
 
             // create the allclasses-frame.html at the root
             stream = new StringReader("<xsl:stylesheet xmlns:xsl='http://www.w3.org/1999/XSL/Transform' version='1.0' >" +
-                "<xsl:output method='html' indent='yes' encoding='ISO-8859-1'/>" +
+                "<xsl:output method='html' indent='yes' encoding='utf-8'/>" +
                 "<xsl:include href=\"" + this.xslFrameDefintionFilePath + "\"/>" +
                 "<xsl:template match=\"test-results\">" +
                 "    <xsl:call-template name=\"all.classes\"/>" +
@@ -229,7 +229,7 @@ namespace NUnit2Report.Console
 
             // create the overview-frame.html at the root
             stream = new StringReader("<xsl:stylesheet xmlns:xsl='http://www.w3.org/1999/XSL/Transform' version='1.0' >" +
-                "<xsl:output method='html' indent='yes' encoding='ISO-8859-1'/>" +
+                "<xsl:output method='html' indent='yes' encoding='utf-8'/>" +
                 "<xsl:include href=\"" + this.xslFrameDefintionFilePath + "\"/>" +
                 "<xsl:template match=\"test-results\">" +
                 "    <xsl:call-template name=\"all.packages\"/>" +
@@ -289,7 +289,7 @@ namespace NUnit2Report.Console
                     // Correct MockError duplicate testName !
                     // test-suite[@name='MockTestFixture' and ancestor::test-suite[@name='Assemblies'][position()=last()]]
                     stream = new StringReader("<xsl:stylesheet xmlns:xsl='http://www.w3.org/1999/XSL/Transform' version='1.0' >" +
-                        "<xsl:output method='html' indent='yes' encoding='ISO-8859-1'/>" +
+                        "<xsl:output method='html' indent='yes' encoding='utf-8'/>" +
                         "<xsl:include href=\"" + this.xslFrameDefintionFilePath + "\"/>" +
                         "<xsl:template match=\"/\">" +
                         "	<xsl:for-each select=\"//test-suite[@name='" + testSuiteName + "' and ancestor::test-suite[@name='" + parent + "'][position()=last()]]\">" +
@@ -421,7 +421,7 @@ namespace NUnit2Report.Console
             xslt.Load(this.xslGlobalizationDefinitionFilePath, new XsltSettings(true, true), new XmlUrlResolver());
 
             var xmlDoc = new XPathDocument(tmpFirstTransformPath);
-            var writerFinal = new XmlTextWriter(Path.Combine(this.OutputDirectory, this.OutputFilename), System.Text.Encoding.GetEncoding("ISO-8859-1"));
+            var writerFinal = new XmlTextWriter(Path.Combine(this.OutputDirectory, this.OutputFilename), System.Text.Encoding.GetEncoding("utf-8"));
 
             // Apply the second transform to xmlReader to final ouput
             xslt.Transform(xmlDoc, xsltI18NArgs, writerFinal);
@@ -469,7 +469,7 @@ namespace NUnit2Report.Console
             xslt.Load(this.xslGlobalizationDefinitionFilePath, new XsltSettings(true, true), new XmlUrlResolver());
 
             var xmlDoc = new XPathDocument(tmpFirstTransformPath);
-            var writerFinal = new XmlTextWriter(fileName, System.Text.Encoding.GetEncoding("ISO-8859-1"));
+            var writerFinal = new XmlTextWriter(fileName, System.Text.Encoding.GetEncoding("utf-8"));
 
             // Apply the second transform to xmlReader to final ouput
             xslt.Transform(xmlDoc, xsltI18NArgs, writerFinal);

@@ -49,12 +49,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\CommonAssemblyProperties\AssemblyCommonInfo.cs">
-      <Link>Properties\AssemblyCommonInfo.cs</Link>
-    </Compile>
-    <Compile Include="..\..\CommonAssemblyProperties\AssemblyVersion.cs">
-      <Link>Properties\AssemblyVersion.cs</Link>
-    </Compile>
     <Compile Include="ApplicationController.cs" />
     <Compile Include="NUnit2Report.cs" />
     <Compile Include="Options.cs" />

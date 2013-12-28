@@ -42,7 +42,7 @@ namespace NUnit2Report.Console
         /// Specifies the output language of the report
         /// </summary>
         [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = JustificationForTheFieldsMustBePrivate)]
-        [Option(null, "lang", HelpText = "[--lang <en>|<fr>] Indicates the language used by the report generator. Default value is: 'en'")]
+        [Option(null, "lang", HelpText = "[--lang <en>|<fr>|<ru>] Indicates the language used by the report generator. Default value is: 'en'")]
         public string Language = string.Empty;
 
         /// <summary>

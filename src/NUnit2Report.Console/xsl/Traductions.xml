@@ -1,38 +1,73 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Traductions>
-	<Traduction lang="fr" key="UnitTestsResults">R�sultats des Test Unitaires</Traduction>
-	<Traduction lang="fr" key="GeneratedBy">G�n�r� par</Traduction>
+  <!--French translation-->
+  <Traduction lang="fr" key="UnitTestsResults">Résultats des Test Unitaires</Traduction>
+	<Traduction lang="fr" key="GeneratedBy">Généré par</Traduction>
 	<Traduction lang="fr" key="Designed">A utiliser avec</Traduction>
 	<Traduction lang="fr" key="and">et</Traduction>
 	<Traduction lang="fr" key="EnvironmentInformation">Informations environnement</Traduction>
 	<Traduction lang="fr" key="Tests">Tests</Traduction>
 	<Traduction lang="fr" key="Failures">Echecs</Traduction>
 	<Traduction lang="fr" key="Errors">Erreurs</Traduction>
-	<Traduction lang="fr" key="SuccessRate">Taux de succ�s</Traduction>
-	<Traduction lang="fr" key="Time">Dur�e (s)</Traduction>
-	<Traduction lang="fr" key="Summary">R�sum�</Traduction>
+	<Traduction lang="fr" key="SuccessRate">Taux de succès</Traduction>
+	<Traduction lang="fr" key="Time">Durée (s)</Traduction>
+	<Traduction lang="fr" key="Summary">Résumé</Traduction>
 	<Traduction lang="fr" key="Name">Nom</Traduction>
 	<Traduction lang="fr" key="Status">Status</Traduction>
 	<Traduction lang="fr" key="TestSuiteSummary">Index des suites de tests</Traduction>
 	<Traduction lang="fr" key="Backtotop">Retour haut de page</Traduction>
 	<Traduction lang="fr" key="NETCLRVersion">Version .NET CLR</Traduction>
-	<Traduction lang="fr" key="OperatingSystem">Syst�me d'exploitation</Traduction>
-	<Traduction lang="fr" key="BaseDirectory">R�pertoire de base</Traduction>
+	<Traduction lang="fr" key="OperatingSystem">Système d'exploitation</Traduction>
+	<Traduction lang="fr" key="BaseDirectory">Répertoire de base</Traduction>
 	<Traduction lang="fr" key="Buildfile">Fichier de construction</Traduction>
 	<Traduction lang="fr" key="NAntVersion">Nant Version</Traduction>
-	<Traduction lang="fr" key="NAntLocation">R�pertoire Nant</Traduction>
+	<Traduction lang="fr" key="NAntLocation">Répertoire Nant</Traduction>
 	<Traduction lang="fr" key="Value">Valeur</Traduction>
-	<Traduction lang="fr" key="Property">Propri�t�</Traduction>
+	<Traduction lang="fr" key="Property">Propriété</Traduction>
 	<Traduction lang="fr" key="EnvironmentInformation">Information Environment</Traduction>
-	<Traduction lang="fr" key="anticipated">sont pr�visibles et v�rifi�s gr�ce aux assertions tandis que les</Traduction>
-	<Traduction lang="fr" key="failures">Les �checs</Traduction>
+	<Traduction lang="fr" key="anticipated">sont prévisibles et vérifiés grâce aux assertions tandis que les</Traduction>
+	<Traduction lang="fr" key="failures">Les échecs</Traduction>
 	<Traduction lang="fr" key="errors">erreurs</Traduction>
-	<Traduction lang="fr" key="unanticipated">ne sont pas anticip�es.</Traduction>
+	<Traduction lang="fr" key="unanticipated">ne sont pas anticipées.</Traduction>
 	<Traduction lang="fr" key="Note">Note</Traduction>
 	<Traduction lang="fr" key="Failure">Echec</Traduction>
 	<Traduction lang="fr" key="Error">Erreur</Traduction>
-	<Traduction lang="fr" key="Pass">Pass�</Traduction>
-	<Traduction lang="fr" key="Ignored">Ignor�</Traduction>
+	<Traduction lang="fr" key="Pass">Passé</Traduction>
+	<Traduction lang="fr" key="Ignored">Ignoré</Traduction>
 	<Traduction lang="fr" key="Home">Accueil</Traduction>
+  <!--Russian translation-->
+  <Traduction lang="ru" key="UnitTestsResults">Результаты тестов</Traduction>
+  <Traduction lang="ru" key="GeneratedBy">Сгенерировано </Traduction>
+  <Traduction lang="ru" key="Designed">Разработано для использования с </Traduction>
+  <Traduction lang="ru" key="and">и</Traduction>
+  <Traduction lang="ru" key="EnvironmentInformation">Информация об окружении</Traduction>
+  <Traduction lang="ru" key="Tests">Тесты</Traduction>
+  <Traduction lang="ru" key="Failures">Провалились</Traduction>
+  <Traduction lang="ru" key="Errors">Ошибки</Traduction>
+  <Traduction lang="ru" key="SuccessRate">Процент успешных</Traduction>
+  <Traduction lang="ru" key="Time">Время</Traduction>
+  <Traduction lang="ru" key="Summary">Общие итоги</Traduction>
+  <Traduction lang="ru" key="Name">Имя</Traduction>
+  <Traduction lang="ru" key="Status">Статус</Traduction>
+  <Traduction lang="ru" key="TestSuiteSummary">Результаты по тест-сьютам</Traduction>
+  <Traduction lang="ru" key="Backtotop">Наверх</Traduction>
+  <Traduction lang="ru" key="NETCLRVersion">Версия .NET CLR</Traduction>
+  <Traduction lang="ru" key="OperatingSystem">Операционная система</Traduction>
+  <Traduction lang="ru" key="BaseDirectory">Корневая директория</Traduction>
+  <Traduction lang="ru" key="Buildfile">Файл сборки</Traduction>
+  <Traduction lang="ru" key="NAntVersion">Версия NAnt</Traduction>
+  <Traduction lang="ru" key="NAntLocation">Расположение NAnt</Traduction>
+  <Traduction lang="ru" key="Value">Значение</Traduction>
+  <Traduction lang="ru" key="Property">Свойство</Traduction>
+  <Traduction lang="ru" key="anticipated">были запущены</Traduction>
+  <Traduction lang="ru" key="failures">провалилившиеся тесты </Traduction>
+  <Traduction lang="ru" key="errors">, а тесты с ошибками </Traduction>
+  <Traduction lang="ru" key="unanticipated">не были запущены</Traduction>
+  <Traduction lang="ru" key="Note">Примечание</Traduction>
+  <Traduction lang="ru" key="Failure">Провалился</Traduction>
+  <Traduction lang="ru" key="Error">Ошибка</Traduction>
+  <Traduction lang="ru" key="Pass">Успешно</Traduction>
+  <Traduction lang="ru" key="Ignored">Игнорирован</Traduction>
+  <Traduction lang="ru" key="Home">Домой</Traduction>
 </Traductions>	
 	

@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:nunit2report="urn:my-scripts">
 
-  <xsl:output method="html" indent="yes" encoding="ISO-8859-1"/>
+  <xsl:output method="html" indent="yes" encoding="utf-8"/>
 
   <xsl:param name="nant.filename" />
   <xsl:param name="nant.version" />
@@ -537,7 +537,7 @@
     <table width="100%">
       <tr>
         <td align="left">
-          <span id=":i18n:GeneratedBy">Generated </span>On: <xsl:value-of select="/testsummary/test-results/@date"/> - <xsl:value-of select="concat(/testsummary/test-results/@time,' ')"/> <a href="#" onclick="javascript:Toggle('blabla')" id=":i18n:EnvironmentInformation">Environment Information</a>
+          <span id=":i18n:GeneratedBy">Generated On:</span><xsl:value-of select="/testsummary/test-results/@date"/> - <xsl:value-of select="concat(/testsummary/test-results/@time,' ')"/> <a href="#" onclick="javascript:Toggle('blabla')" id=":i18n:EnvironmentInformation">Environment Information</a>
         </td>
         <td align="right">
           <span id=":i18n:Designed">Designed for use with </span><a href='http://nunit.sourceforge.net/'>NUnit.</a>

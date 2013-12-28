@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:nunit2report="urn:my-scripts">
   <xsl:param name="nant.filename" />
   <xsl:param name="nant.version" />
@@ -100,7 +100,7 @@
     <table width="100%">
       <tr>
         <td align="left">
-          <span id=":i18n:GeneratedBy">Generated </span> on: <xsl:value-of select="@date"/> - <xsl:value-of select="concat(@time,' ')"/> <a href="#envinfo" id=":i18n:EnvironmentInformation">Environment Information</a>
+          <span id=":i18n:GeneratedBy">Generated  on: </span><xsl:value-of select="@date"/> - <xsl:value-of select="concat(@time,' ')"/> <a href="#envinfo" id=":i18n:EnvironmentInformation">Environment Information</a>
         </td>
         <td align="right">
           <span id=":i18n:Designed">Designed for use with </span> <a href='http://nunit.sourceforge.net/'>NUnit.</a>
