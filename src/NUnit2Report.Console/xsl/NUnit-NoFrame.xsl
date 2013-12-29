@@ -35,7 +35,7 @@
         border: #bcd7cd 4px groove;
       }
       div.inner{
-        padding-left:7px;
+        margin:0 auto;
         width:99%;
         margin-bottom:10px;
         margin-top:10px;
@@ -389,7 +389,7 @@
           <xsl:sort select="@name"/>
           <xsl:variable name="testCount" select="count(child::results/test-case)"/>
           <xsl:variable name="errorCount" select="count(child::results/test-case[@executed='False'])"/>
-          <xsl:variable name="failureCount" select="count(child::results/test-case[@result='Error' or @result='NotRunnable'])"/>
+          <xsl:variable name="failureCount" select="count(child::results/test-case[@result='Failure' or @result='Error'])"/>
           <xsl:variable name="timeCount" select="translate(@time,',','.')"/>
 
           <!-- write a summary for the package -->
@@ -423,7 +423,7 @@
               <xsl:value-of select="$errorCount"/>
             </td>
             <td nowrap="nowrap" width="10%" align="right">
-              <xsl:variable name="successRate" select="($testCount - $failureCount) div ($testCount + $errorCount)"/>
+              <xsl:variable name="successRate" select="($testCount - $failureCount - $errorCount) div $testCount"/>
               <b>
                 <xsl:call-template name="display-percent">
                   <xsl:with-param name="value" select="$successRate"/>
