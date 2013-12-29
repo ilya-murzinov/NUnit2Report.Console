@@ -72,6 +72,24 @@
     </xsl:if>
   </xsl:template>
 
+  <xsl:template name="substring-after-last">
+    <xsl:param name="string" />
+    <xsl:param name="delimiter" />
+    <xsl:choose>
+      <xsl:when test="contains($string, $delimiter)">
+        <xsl:call-template name="substring-after-last">
+          <xsl:with-param name="string"
+            select="substring-after($string, $delimiter)" />
+          <xsl:with-param name="delimiter" select="$delimiter" />
+        </xsl:call-template>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of
+     select="$string" />
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
   <!--
 	template that will convert a carriage return into a br tag
 	@param word the text from which to convert CR to BR tag
@@ -223,7 +241,10 @@
             <a>
               <xsl:attribute name="href">
                 <xsl:variable name="link" select="substring-before($name, '.dll')"/>
-                <xsl:value-of select="concat($link,'.txt')"/>
+                <xsl:call-template name="substring-after-last">
+                  <xsl:with-param name="string" select="concat($link,'.txt')"/>
+                  <xsl:with-param name="delimiter" select="'\'"/>
+                </xsl:call-template>
               </xsl:attribute>
               <xsl:attribute name="class">
                 <xsl:choose>
@@ -233,7 +254,10 @@
                   <xsl:otherwise>bad</xsl:otherwise>
                 </xsl:choose>
               </xsl:attribute>
-              <xsl:value-of select="$name"/>
+              <xsl:call-template name="substring-after-last">
+                <xsl:with-param name="string" select="concat(substring-before($name,'.dll'),' (Click to see the log)')"/>
+                <xsl:with-param name="delimiter" select="'\'"/>
+              </xsl:call-template>
             </a>
           </td>
           <td width="10%">

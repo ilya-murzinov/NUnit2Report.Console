@@ -32,7 +32,7 @@
       
       div.outer{
         width:99%;
-        border: #bcd7cd 4px groove;
+        border: #bcd7cd 4px solid;
       }
       div.inner{
         margin:0 auto;
