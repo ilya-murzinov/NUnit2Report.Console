@@ -94,20 +94,23 @@
 -->
   <xsl:template name="header">
     <xsl:param name="path"/>
-    <h1>
-      <span id=":i18n:UnitTestsResults">Unit Tests Results</span> <xsl:value-of select="$nant.project.name"/>
-    </h1>
-    <table class="noborderHeader">
-      <tr>
-        <td class="noborder" width="50%" align="left">
-          <span id=":i18n:GeneratedBy">Generated  on: </span><xsl:value-of select="@date"/> - <xsl:value-of select="concat(@time,' ')"/> <a href="#envinfo" class="link" id=":i18n:EnvironmentInformation">Environment Information</a>
-        </td>
-        <td class="noborder" width="50%" align="right">
-          <span id=":i18n:Designed">Designed for use with </span> <a class="link" href='http://nunit.sourceforge.net/'>NUnit.</a>
-        </td>
-      </tr>
-    </table>
-    <hr size="1" width="95%" align="left"/>
+    <div class="innerHeader">
+      <h1 style="margin-bottom:10px;">
+        <span id=":i18n:UnitTestsResults">Unit Tests Results</span>
+        <xsl:value-of select="$nant.project.name"/>
+      </h1>
+      <table class="noborderHeader">
+        <tr>
+          <td class="noborder" width="50%" align="left">
+            <span id=":i18n:GeneratedBy">Generated  on: </span><xsl:value-of select="@date"/> - <xsl:value-of select="concat(@time,' ')"/> <a href="#envinfo" class="link" id=":i18n:EnvironmentInformation">Environment Information</a>
+          </td>
+          <td class="noborder" width="50%" align="right">
+            <span id=":i18n:Designed">Designed for use with </span>
+            <a class="link" href='http://nunit.sourceforge.net/'>NUnit.</a>
+          </td>
+        </tr>
+      </table>
+    </div>
   </xsl:template>
 
   <xsl:template name="summaryHeader">
@@ -191,50 +194,52 @@
 		=====================================================================
 -->
   <xsl:template name="summary">
-    <h2 id=":i18n:Summary">Summary</h2>
-    <xsl:variable name="name" select="@name"/>
-    <xsl:variable name="total" select="@total"/>
-    <xsl:variable name="failures" select="@errors"/>
-    <xsl:variable name="errors" select="@failures"/>
-    <xsl:variable name="timeCount" select="translate(test-suite/@time,',','.')"/>
-    <xsl:variable name="successRate" select="($total - $failures - $errors) div $total"/>
-    
-    <table>
-      <xsl:call-template name="summaryHeader"/>
-      <tr valign="top">
-        <xsl:attribute name="class">
-          <xsl:choose>
-            <xsl:when test="$successRate &gt; 0.95">excellent</xsl:when>
-            <xsl:when test="$successRate &gt; 0.85 and $successRate &lt; 0.95">good</xsl:when>
-            <xsl:when test="$successRate &gt; 0.75 and $successRate &lt; 0.85">average</xsl:when>
-            <xsl:otherwise>bad</xsl:otherwise>
-          </xsl:choose>
-        </xsl:attribute>
-        <td width="50%">
-          <xsl:value-of select="$name"/>
-        </td>
-        <td width="10%">
-          <xsl:value-of select="$total"/>
-        </td>
-        <td width="10%">
-          <xsl:value-of select="$failures"/>
-        </td>
-        <td width="10%">
-          <xsl:value-of select="$errors"/>
-        </td>
-        <td nowrap="nowrap" width="10%" align="right">
-          <xsl:call-template name="display-percent">
-            <xsl:with-param name="value" select="$successRate"/>
-          </xsl:call-template>
-        </td>
-        <td  width="10%" align="right">
-          <xsl:call-template name="display-time">
-            <xsl:with-param name="value" select="$timeCount"/>
-          </xsl:call-template>
-        </td>
-      </tr>
-    </table>
-    <span id=":i18n:Note">Note</span>: <i id=":i18n:failures">failures </i> <span id=":i18n:anticipated">are anticipated and checked for with assertions while </span> <i id=":i18n:errors">errors </i> <span id=":i18n:unanticipated">are unanticipated.</span>
+    <div class="inner">
+      <h2 id=":i18n:Summary">Summary</h2>
+      <xsl:variable name="name" select="@name"/>
+      <xsl:variable name="total" select="@total"/>
+      <xsl:variable name="failures" select="@errors"/>
+      <xsl:variable name="errors" select="@not-run"/>
+      <xsl:variable name="timeCount" select="translate(test-suite/@time,',','.')"/>
+      <xsl:variable name="successRate" select="($total - $failures) div ($total + $errors)"/>
+
+      <table>
+        <xsl:call-template name="summaryHeader"/>
+        <tr valign="top">
+          <xsl:attribute name="class">
+            <xsl:choose>
+              <xsl:when test="$successRate &gt; 0.95">excellent</xsl:when>
+              <xsl:when test="$successRate &gt; 0.85 and $successRate &lt; 0.95">good</xsl:when>
+              <xsl:when test="$successRate &gt; 0.75 and $successRate &lt; 0.85">average</xsl:when>
+              <xsl:otherwise>bad</xsl:otherwise>
+            </xsl:choose>
+          </xsl:attribute>
+          <td width="50%">
+            <xsl:value-of select="$name"/>
+          </td>
+          <td width="10%">
+            <xsl:value-of select="$total + $errors"/>
+          </td>
+          <td width="10%">
+            <xsl:value-of select="$failures"/>
+          </td>
+          <td width="10%">
+            <xsl:value-of select="$errors"/>
+          </td>
+          <td nowrap="nowrap" width="10%" align="right">
+            <xsl:call-template name="display-percent">
+              <xsl:with-param name="value" select="$successRate"/>
+            </xsl:call-template>
+          </td>
+          <td  width="10%" align="right">
+            <xsl:call-template name="display-time">
+              <xsl:with-param name="value" select="$timeCount"/>
+            </xsl:call-template>
+          </td>
+        </tr>
+      </table>
+      <span id=":i18n:Note">Note</span>: <i id=":i18n:failures">failures </i> <span id=":i18n:anticipated">are anticipated and checked for with assertions while </span> <i id=":i18n:errors">errors </i> <span id=":i18n:unanticipated">are unanticipated.</span>
+    </div>
   </xsl:template>
 
   <!--
@@ -378,39 +383,41 @@
 		=====================================================================
 -->
   <xsl:template name="envinfo">
-    <a name="envinfo"></a>
-    <h2 id=":i18n:EnvironmentInformation">Environment Information</h2>
-    <table>
-      <tr class="TableHeader">
-        <td id=":i18n:Property">Property</td>
-        <td id=":i18n:Value">Value</td>
-      </tr>
-      <tr>
-        <td id=":i18n:MachineName">Machine name</td>
-        <td>
-          <xsl:value-of select="$sys.machine.name"/>
-        </td>
-      </tr>
-      <tr>
-        <td id=":i18n:User">User</td>
-        <td>
-          <xsl:value-of select="$sys.username"/>
-        </td>
-      </tr>
-      <tr>
-        <td id=":i18n:OperatingSystem">Operating System</td>
-        <td>
-          <xsl:value-of select="$sys.os"/>
-        </td>
-      </tr>
-      <tr>
-        <td id=":i18n:NETCLRVersion">.NET CLR Version</td>
-        <td>
-          <xsl:value-of select="$sys.clr.version"/>
-        </td>
-      </tr>
-    </table>
-    <a href="#top" class="link" id=":i18n:Backtotop">Back to top</a>
+    <div class="inner">
+      <a name="envinfo"></a>
+      <h2 id=":i18n:EnvironmentInformation">Environment Information</h2>
+      <table>
+        <tr class="TableHeader">
+          <td id=":i18n:Property">Property</td>
+          <td id=":i18n:Value">Value</td>
+        </tr>
+        <tr>
+          <td id=":i18n:MachineName">Machine name</td>
+          <td>
+            <xsl:value-of select="$sys.machine.name"/>
+          </td>
+        </tr>
+        <tr>
+          <td id=":i18n:User">User</td>
+          <td>
+            <xsl:value-of select="$sys.username"/>
+          </td>
+        </tr>
+        <tr>
+          <td id=":i18n:OperatingSystem">Operating System</td>
+          <td>
+            <xsl:value-of select="$sys.os"/>
+          </td>
+        </tr>
+        <tr>
+          <td id=":i18n:NETCLRVersion">.NET CLR Version</td>
+          <td>
+            <xsl:value-of select="$sys.clr.version"/>
+          </td>
+        </tr>
+      </table>
+      <a href="#top" class="link" id=":i18n:Backtotop">Back to top</a>
+    </div>
   </xsl:template>
 
   <!-- I am sure that all nodes are called -->

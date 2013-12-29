@@ -29,7 +29,36 @@
 				font:normal 68% verdana,arial,helvetica;
 				color:#000000;
 			}
-
+      
+      div.outer{
+        width:99%;
+        border: #bcd7cd 4px solid;
+      }
+      div.inner{
+        padding-left:6px;
+        width:99%;
+        margin-bottom:10px;
+        margin-top:10px;
+      }
+      
+      div.outerHeader{
+        padding-left:6px;
+        width:99%;
+        margin-bottom:10px;
+        margin-top:10px;
+      }
+      
+      div.innerHeader{
+        width:99%;
+        margin-bottom:10px;
+        margin-top:10px;
+      }
+      
+      div.space{
+        padding-top:20px;
+      }
+      
+      
 			span.covered {
 				background: #00df00; 
 				border:#9c9c9c 1px solid;
@@ -50,7 +79,7 @@
       table{
         border: #dcdcdc 2px solid;
         border-collapse: collapse;
-        width:95%;
+        width:100%;
         cellpadding:2;
         cellspasing:0;
       }
@@ -75,7 +104,7 @@
       }
       
       div.thin{
-        width:95%;
+        /*width:95%;*/
         BORDER-BOTTOM: #dcdcdc 2px solid; 
 				BORDER-RIGHT: #dcdcdc 1px solid;
         BORDER-TOP: #dcdcdc 1px solid;
@@ -123,39 +152,39 @@
         padding-right:3px;
 			}
 			p {
-				line-height:1.5em;
-				margin-top:0.5em; 
-				margin-bottom:1.0em;
+				line-height:0em;
+				margin-top:5em; 
+				margin-bottom:0em;
 			}
 			h1 {
-				MARGIN: 0px 0px 5px; 
+				MARGIN: 0px 0px 2px; 
 				FONT: bold 200% verdana,arial,helvetica;
 			}
 			h2 {
-				MARGIN-TOP: 1em; 
-				MARGIN-BOTTOM: 0.5em; 
+				MARGIN: 0px 0px 2px; 
 				FONT: bold 145% verdana,arial,helvetica;
 			}
 			h3 {
-				MARGIN-BOTTOM: 0.5em; 
+				MARGIN: 0px 0px 2px;  
 				FONT: bold 115% verdana,arial,helvetica;
 			}
 			h4 {
-				MARGIN-BOTTOM: 0.5em; 
+				MARGIN: 0px 0px 2px; 
 				FONT: bold 100% verdana,arial,helvetica;
 			}
 			h5 {
-				MARGIN-BOTTOM: 0.5em; 
+        MARGIN: 0px 0px 2px;
 				FONT: bold 100% verdana,arial,helvetica
 			}
 			h6 {
-				MARGIN-BOTTOM: 0.5em; 
+				MARGIN: 0px 0px 2px; 
 				FONT: bold 100% verdana,arial,helvetica
 			}	
       .exception{
         display:none;
       }
 			.Error {
+        color:red;
 				font-weight:bold; 
 			}
 			.Failure {
@@ -265,19 +294,16 @@
 				padding-left:5px;*/
 			}
 			a.ignored {
-				font-weight:bold; 
-				text-decoration: none;
-				padding-left:5px;
+				font-weight:bold;
+        color:#000;
 			}
 			a.ignored:visited {
-				font-weight:bold; 
-				text-decoration: none;
-				padding-left:5px;
+				color:#000;
+        font-weight:bold;
 			}
 			a.ignored:active {
-				font-weight:bold; 
-				text-decoration: none;
-				padding-left:5px;
+				font-weight:bold;
+        color:#000;
 			}
       .excellent{
       color:green;
@@ -318,24 +344,34 @@
 		</HEAD>
 		<body text="#000000" bgColor="#ffffff">
 			<a name="#top"></a>
-			<xsl:call-template name="header"/>
-			
+      <div class="outerHeader">
+      <xsl:call-template name="header"/>
+      </div>
+      <div class="space">
+      </div>
+      
 			<!-- Summary part -->
-			<xsl:call-template name="summary"/>
-			<hr size="1" width="95%" align="left"/>
-			
+      <div class="outer">
+      <xsl:call-template name="summary"/>
+      </div>
+      <div class="space">
+      </div>
 			<!-- Package List part -->
-			<xsl:call-template name="packagelist"/>
-			<hr size="1" width="95%" align="left"/>
-			
+      <div class="outer">
+      <xsl:call-template name="packagelist"/>
+      </div>
+			<div class="space">
+      </div>
 			<!-- For each testsuite create the part -->
-			<xsl:call-template name="testsuites"/>
-			<hr size="1" width="95%" align="left"/>
-			
+      <div class="outer">
+        <xsl:call-template name="testsuites"/>
+      </div>
+      <div class="space">
+      </div>
 			<!-- Environment info part -->
- 			
-			<xsl:call-template name="envinfo"/>
-
+      <div class="outer">
+        <xsl:call-template name="envinfo"/>
+      </div>
 		</body>
 	</HTML>
 </xsl:template>
@@ -346,78 +382,92 @@
 	<!-- Write a list of all packages with an hyperlink to the anchor of    -->
 	<!-- of the package name.                                               -->
 	<!-- ================================================================== -->
-	<xsl:template name="packagelist">	
-		<h2 id=":i18n:TestSuiteSummary">TestSuite Summary</h2>
-		<table>
-			<xsl:call-template name="packageSummaryHeader"/>
-			<!-- list all packages recursively -->
-			<xsl:for-each select="//test-suite[(child::results/test-case)]">
-				<xsl:sort select="@name"/>
-				<xsl:variable name="testCount" select="count(child::results/test-case)"/>
-				<xsl:variable name="errorCount" select="count(child::results/test-case[@result='Failure'])"/>
-				<xsl:variable name="failureCount" select="count(child::results/test-case[@result='Error'])"/>
-				<xsl:variable name="timeCount" select="translate(@time,',','.')"/>
-		
-				<!-- write a summary for the package -->
-				<tr valign="top">
-					<!-- set a nice color depending if there is an error/failure -->
-					<xsl:attribute name="class">
-						<xsl:choose>
-						    <xsl:when test="$failureCount &gt; 0">Failure</xsl:when>
-							<xsl:when test="$errorCount &gt; 0"> Error</xsl:when>
-							<xsl:otherwise>Pass</xsl:otherwise>
-						</xsl:choose>
-					</xsl:attribute> 	
-					<td width="50%">
-						<a href="#{generate-id(@name)}">
-						<xsl:attribute name="class">
-							<xsl:choose>
-								<xsl:when test="$failureCount &gt; 0">Failure</xsl:when>
-							</xsl:choose>
-						</xsl:attribute> 	
-						<xsl:value-of select="@name"/>
-						</a>
-					</td>
-          <td width="10%"><xsl:value-of select="$testCount"/></td>					
-					<td width="10%"><xsl:value-of select="$failureCount"/></td>
-          <td width="10%"><xsl:value-of select="$errorCount"/></td>
-					<td nowrap="nowrap" width="10%" align="right">
-						<xsl:variable name="successRate" select="($testCount - $errorCount - $failureCount) div $testCount"/>
-						<b>
-						<xsl:call-template name="display-percent">
-							<xsl:with-param name="value" select="$successRate"/>
-						</xsl:call-template>
-						</b>
-					</td>
-					<td width="10%" align="right">
-            <xsl:call-template name="display-time">
-              <xsl:with-param name="value" select="$timeCount"/>
-            </xsl:call-template>				
-					</td>					
-				</tr>
-			</xsl:for-each>
-		</table>		
+	<xsl:template name="packagelist">
+    <div class="inner">
+      <h2 id=":i18n:TestSuiteSummary">TestSuite Summary</h2>
+      <table>
+        <xsl:call-template name="packageSummaryHeader"/>
+        <!-- list all packages recursively -->
+        <xsl:for-each select="//test-suite[(child::results/test-case)]">
+          <xsl:sort select="@name"/>
+          <xsl:variable name="testCount" select="count(child::results/test-case)"/>
+          <xsl:variable name="errorCount" select="count(child::results/test-case[@executed='False'])"/>
+          <xsl:variable name="failureCount" select="count(child::results/test-case[@result='Error'])"/>
+          <xsl:variable name="timeCount" select="translate(@time,',','.')"/>
+
+          <!-- write a summary for the package -->
+          <tr valign="top">
+            <!-- set a nice color depending if there is an error/failure -->
+            <xsl:attribute name="class">
+              <xsl:choose>
+                <xsl:when test="$failureCount &gt; 0">Failure</xsl:when>
+                <xsl:when test="$errorCount &gt; 0"> Error</xsl:when>
+                <xsl:otherwise>Pass</xsl:otherwise>
+              </xsl:choose>
+            </xsl:attribute>
+            <td width="50%">
+              <a href="#{generate-id(@name)}">
+                <xsl:attribute name="class">
+                  <xsl:choose>
+                    <xsl:when test="$failureCount &gt; 0">Failure</xsl:when>
+                    <xsl:when test="$errorCount &gt; 0">Error</xsl:when>
+                  </xsl:choose>
+                </xsl:attribute>
+                <xsl:value-of select="@name"/>
+              </a>
+            </td>
+            <td width="10%">
+              <xsl:value-of select="$testCount"/>
+            </td>
+            <td width="10%">
+              <xsl:value-of select="$failureCount"/>
+            </td>
+            <td width="10%">
+              <xsl:value-of select="$errorCount"/>
+            </td>
+            <td nowrap="nowrap" width="10%" align="right">
+              <xsl:variable name="successRate" select="($testCount - $failureCount) div ($testCount + $errorCount)"/>
+              <b>
+                <xsl:call-template name="display-percent">
+                  <xsl:with-param name="value" select="$successRate"/>
+                </xsl:call-template>
+              </b>
+            </td>
+            <td width="10%" align="right">
+              <xsl:call-template name="display-time">
+                <xsl:with-param name="value" select="$timeCount"/>
+              </xsl:call-template>
+            </td>
+          </tr>
+        </xsl:for-each>
+      </table>
+    </div>
 	</xsl:template>
 	
 
-	<xsl:template name="testsuites">   
-		<xsl:for-each select="//test-suite[(child::results/test-case)]">
-			<xsl:sort select="@name"/>
-			<!-- create an anchor to this class name -->
-			<a name="#{generate-id(@name)}"></a>
-			<h3><span id=":i18n:TestSuit">TestSuite </span><xsl:value-of select="@name"/></h3>
-      
-			<div class="thin">
-				<!-- Header -->
-				<xsl:call-template name="classesSummaryHeader"/>
+	<xsl:template name="testsuites">
+    <div class="inner">
+      <xsl:for-each select="//test-suite[(child::results/test-case)]">
+        <xsl:sort select="@name"/>
+        <!-- create an anchor to this class name -->
+        <a name="#{generate-id(@name)}"></a>
+        <h3>
+          <span id=":i18n:TestSuit">TestSuite </span>
+          <xsl:value-of select="@name"/>
+        </h3>
 
-				<!-- match the testcases of this package -->
-				<xsl:apply-templates select="results/test-case">
-				   <xsl:sort select="@name" /> 
-				</xsl:apply-templates>
-			</div>
-			<a href="#top" class="link" id=":i18n:Backtotop">Back to top</a>
-		</xsl:for-each>
+        <div class="thin">
+          <!-- Header -->
+          <xsl:call-template name="classesSummaryHeader"/>
+
+          <!-- match the testcases of this package -->
+          <xsl:apply-templates select="results/test-case">
+            <xsl:sort select="@name" />
+          </xsl:apply-templates>
+        </div>
+        <a href="#top" class="link" id=":i18n:Backtotop">Back to top</a>
+      </xsl:for-each>
+    </div>
 	</xsl:template>
 	
 
