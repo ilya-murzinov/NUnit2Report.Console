@@ -220,7 +220,21 @@
             </xsl:choose>
           </xsl:attribute>
           <td width="50%">
-            <xsl:value-of select="$name"/>
+            <a>
+              <xsl:attribute name="href">
+                <xsl:variable name="link" select="substring-before($name, '.dll')"/>
+                <xsl:value-of select="concat($link,'.txt')"/>
+              </xsl:attribute>
+              <xsl:attribute name="class">
+                <xsl:choose>
+                  <xsl:when test="$successRate &gt; 0.95">excellent</xsl:when>
+                  <xsl:when test="$successRate &gt; 0.85 and $successRate &lt; 0.95">good</xsl:when>
+                  <xsl:when test="$successRate &gt; 0.75 and $successRate &lt; 0.85">average</xsl:when>
+                  <xsl:otherwise>bad</xsl:otherwise>
+                </xsl:choose>
+              </xsl:attribute>
+              <xsl:value-of select="$name"/>
+            </a>
           </td>
           <td width="10%">
             <xsl:value-of select="$total + $errors"/>
