@@ -206,7 +206,7 @@
       <xsl:variable name="failures" select="@errors"/>
       <xsl:variable name="errors" select="@not-run"/>
       <xsl:variable name="timeCount" select="translate(test-suite/@time,',','.')"/>
-      <xsl:variable name="successRate" select="($total - $failures - $errors) div ($total + $errors)"/>
+      <xsl:variable name="successRate" select="($total - $failures) div ($total + $errors)"/>
 
       <table>
         <xsl:call-template name="summaryHeader"/>
@@ -238,12 +238,7 @@
           </td>
           <td  width="10%" align="right">            
             <xsl:call-template name="display-time">
-              <xsl:with-param name="value">
-                <xsl:choose>
-                  <xsl:when test="$timeCount='NaN'">-</xsl:when>
-                  <xsl:otherwise>$timeCount</xsl:otherwise>
-                </xsl:choose>
-              </xsl:with-param>                
+              <xsl:with-param name="value" select="$timeCount"/>    
             </xsl:call-template>
             
           </td>

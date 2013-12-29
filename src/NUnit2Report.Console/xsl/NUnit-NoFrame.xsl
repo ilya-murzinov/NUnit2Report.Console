@@ -373,9 +373,7 @@
       </div>
 		</body>
 	</HTML>
-</xsl:template>
-	
-	
+</xsl:template>	
 	
 	<!-- ================================================================== -->
 	<!-- Write a list of all packages with an hyperlink to the anchor of    -->
@@ -391,7 +389,7 @@
           <xsl:sort select="@name"/>
           <xsl:variable name="testCount" select="count(child::results/test-case)"/>
           <xsl:variable name="errorCount" select="count(child::results/test-case[@executed='False'])"/>
-          <xsl:variable name="failureCount" select="count(child::results/test-case[@result='Error'])"/>
+          <xsl:variable name="failureCount" select="count(child::results/test-case[@result='Error' or @result='NotRunnable'])"/>
           <xsl:variable name="timeCount" select="translate(@time,',','.')"/>
 
           <!-- write a summary for the package -->
