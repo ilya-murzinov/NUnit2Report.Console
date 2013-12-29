@@ -97,13 +97,13 @@
     <h1>
       <span id=":i18n:UnitTestsResults">Unit Tests Results</span> <xsl:value-of select="$nant.project.name"/>
     </h1>
-    <table width="95%">
+    <table class="noborder">
       <tr>
         <td class="noborder" width="50%" align="left">
-          <span id=":i18n:GeneratedBy">Generated  on: </span><xsl:value-of select="@date"/> - <xsl:value-of select="concat(@time,' ')"/> <a href="#envinfo" id=":i18n:EnvironmentInformation">Environment Information</a>
+          <span id=":i18n:GeneratedBy">Generated  on: </span><xsl:value-of select="@date"/> - <xsl:value-of select="concat(@time,' ')"/> <a href="#envinfo" class="link" id=":i18n:EnvironmentInformation">Environment Information</a>
         </td>
         <td class="noborder" width="50%" align="right">
-          <span id=":i18n:Designed">Designed for use with </span> <a href='http://nunit.sourceforge.net/'>NUnit.</a>
+          <span id=":i18n:Designed">Designed for use with </span> <a class="link" href='http://nunit.sourceforge.net/'>NUnit.</a>
         </td>
       </tr>
     </table>
@@ -147,10 +147,10 @@
         <b id=":i18n:Tests">Tests</b>
       </td>
       <td width="10%">
-        <b id=":i18n:Errors">Errors</b>
+        <b id=":i18n:Failures">Failures</b>
       </td>
       <td width="10%">
-        <b id=":i18n:Failures">Failures</b>
+        <b id=":i18n:Errors">Errors</b>
       </td>
       <td width="10%">
         <b id=":i18n:SuccessRate">Success Rate</b>
@@ -167,15 +167,15 @@
 		=====================================================================
 -->
   <xsl:template name="classesSummaryHeader">
-    <table border="0" cellpadding="2" cellspacing="0" width="95%">
+    <table class="noborder">
     <tr class="TableHeader" valign="top">
-      <td width="80%">
+      <td class="nobottom" width="80%">
         <b id=":i18n:Name">Name</b>
       </td>
-      <td width="10%">
+      <td class="nobottom" width="10%">
         <b id=":i18n:Status">Status</b>
       </td>
-      <td width="10%" nowrap="nowrap">
+      <td class="nobottom" width="10%" nowrap="nowrap">
         <b id=":i18n:Time">Time(s)</b>
       </td>
     </tr>
@@ -199,7 +199,7 @@
     <xsl:variable name="timeCount" select="translate(test-suite/@time,',','.')"/>
     <xsl:variable name="successRate" select="($total - $failures - $errors) div $total"/>
     
-    <table border="0" cellpadding="2" cellspacing="0" width="95%" style="border: #dcdcdc 1px solid;">
+    <table>
       <xsl:call-template name="summaryHeader"/>
       <tr valign="top">
         <xsl:attribute name="class">
@@ -268,13 +268,13 @@
     </xsl:variable>
 
     <xsl:variable name="newid" select="generate-id(@name)" />
-    <table border="0" cellpadding="2" cellspacing="0" width="95%">
-    <tr valign="top">
+    <table class="noborder">
+    <tr class="noborder" valign="top">
       <xsl:attribute name="class">
         <xsl:value-of select="$result"/>
       </xsl:attribute>
 
-      <td width="80%">
+      <td class="nobottom" width="80%">
         <xsl:choose>
           <xsl:when test="$summary.xml != ''">
             <!-- Triangle image -->
@@ -285,16 +285,6 @@
               <xsl:attribute name="id">
                 <xsl:value-of select="concat('I:',$newid)"/>
               </xsl:attribute>
-              <!-- Set the good triangle image 6/4 font-family:Webdings-->
-              <xsl:choose>
-                <xsl:when test="$result != &quot;Pass&quot;">-</xsl:when>
-                <xsl:otherwise>
-                  <xsl:choose>
-                    <xsl:when test="$open.description='no'">-</xsl:when>
-                    <xsl:otherwise>+</xsl:otherwise>
-                  </xsl:choose>
-                </xsl:otherwise>
-              </xsl:choose>
             </a>
           </xsl:when>
         </xsl:choose>
@@ -324,13 +314,13 @@
           </xsl:otherwise>
         </xsl:choose>
       </td>
-      <td width="10%">
+      <td class="nobottom" width="10%">
         <xsl:attribute name="id">
           :i18n:<xsl:value-of select="$result"/>
         </xsl:attribute>
         <xsl:value-of select="$result"/>
       </td>
-      <td width="10%">
+      <td class="nobottom" width="10%">
         <xsl:call-template name="display-time">
           <xsl:with-param name="value" select="@time"/>
         </xsl:call-template>
@@ -338,7 +328,7 @@
     </tr>
 
     <xsl:if test="$result != &quot;Pass&quot;">
-      <tr style="display: none;">
+      <tr class="nobottom" style="display: none;">
         <xsl:attribute name="id">
           <xsl:value-of select="$newid"/>
         </xsl:attribute>
@@ -390,19 +380,19 @@
   <xsl:template name="envinfo">
     <a name="envinfo"></a>
     <h2 id=":i18n:EnvironmentInformation">Environment Information</h2>
-    <table border="0" cellpadding="2" cellspacing="0" width="95%">
+    <table>
       <tr class="TableHeader">
         <td id=":i18n:Property">Property</td>
         <td id=":i18n:Value">Value</td>
       </tr>
       <tr>
-        <td id=":i18n:NETCLRVersion">Machine name</td>
+        <td id=":i18n:MachineName">Machine name</td>
         <td>
           <xsl:value-of select="$sys.machine.name"/>
         </td>
       </tr>
       <tr>
-        <td id=":i18n:NETCLRVersion">User</td>
+        <td id=":i18n:User">User</td>
         <td>
           <xsl:value-of select="$sys.username"/>
         </td>
@@ -420,7 +410,7 @@
         </td>
       </tr>
     </table>
-    <a href="#top" id=":i18n:Backtotop">Back to top</a>
+    <a href="#top" class="link" id=":i18n:Backtotop">Back to top</a>
   </xsl:template>
 
   <!-- I am sure that all nodes are called -->

@@ -42,6 +42,7 @@
   <Traduction lang="ru" key="and">и</Traduction>
   <Traduction lang="ru" key="EnvironmentInformation">Информация об окружении</Traduction>
   <Traduction lang="ru" key="Tests">Тесты</Traduction>
+  <Traduction lang="ru" key="TestSuit">Тест-сьют </Traduction>
   <Traduction lang="ru" key="Failures">Провалились</Traduction>
   <Traduction lang="ru" key="Errors">Ошибки</Traduction>
   <Traduction lang="ru" key="SuccessRate">Процент успешных</Traduction>
@@ -51,6 +52,8 @@
   <Traduction lang="ru" key="Status">Статус</Traduction>
   <Traduction lang="ru" key="TestSuiteSummary">Результаты по тест-сьютам</Traduction>
   <Traduction lang="ru" key="Backtotop">Наверх</Traduction>
+  <Traduction lang="ru" key="MachineName">Компьютер</Traduction>
+  <Traduction lang="ru" key="User">Пользователь</Traduction>
   <Traduction lang="ru" key="NETCLRVersion">Версия .NET CLR</Traduction>
   <Traduction lang="ru" key="OperatingSystem">Операционная система</Traduction>
   <Traduction lang="ru" key="BaseDirectory">Корневая директория</Traduction>

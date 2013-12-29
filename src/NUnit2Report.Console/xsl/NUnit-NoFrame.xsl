@@ -47,18 +47,62 @@
 				border-right:#9c9c9c 1px solid;
 			}
       
-      .noborder{
-        border:0;
-        border-spacing:0;
-        border-color:white;
+      table{
+        border: #dcdcdc 2px solid;
+        border-collapse: collapse;
+        width:95%;
+        cellpadding:2;
+        cellspasing:0;
       }
       
-      td.noborder{
+      table.noborder{
+        width:100%;
         BORDER-BOTTOM: #dcdcdc 0px solid; 
 				BORDER-RIGHT: #dcdcdc 0px solid;
         BORDER-TOP: #dcdcdc 0px solid;
         BORDER-LEFT: #dcdcdc 0px solid;
+        padding-left:0px;
+        padding-right:0px;
       }
+      
+      div.thin{
+        width:95%;
+        BORDER-BOTTOM: #dcdcdc 2px solid; 
+				BORDER-RIGHT: #dcdcdc 1px solid;
+        BORDER-TOP: #dcdcdc 1px solid;
+        BORDER-LEFT: #dcdcdc 1px solid;
+        padding-left:0px;
+        padding-right:0px;
+      }
+      
+      tr.nobottom{
+        BORDER-BOTTOM: #dcdcdc 0px solid; 
+				BORDER-RIGHT: #dcdcdc 0px solid;
+        BORDER-TOP: #dcdcdc 1px solid;
+        BORDER-LEFT: #dcdcdc px solid;
+        padding-left:0px;
+        padding-right:0px;
+      }
+      
+      td.nobottom {
+				FONT-SIZE: 68%;
+				BORDER-BOTTOM: #dcdcdc 0px solid; 
+				BORDER-RIGHT: #dcdcdc 1px solid;
+        BORDER-TOP: #dcdcdc 1px solid;
+        BORDER-LEFT: #dcdcdc 1px solid;
+        padding-left:3px;
+        padding-right:3px;
+			}
+      
+      td.noborder {
+				FONT-SIZE: 68%;
+				BORDER-BOTTOM: #dcdcdc 0px solid; 
+				BORDER-RIGHT: #dcdcdc 0px solid;
+        BORDER-TOP: #dcdcdc 0px solid;
+        BORDER-LEFT: #dcdcdc 0px solid;
+        padding-left:0px;
+        padding-right:0px;
+			}
       
 			td {
 				FONT-SIZE: 68%;
@@ -121,6 +165,10 @@
 				font-weight:bold; 
 				color:green;
 				text-decoration: none;
+        BORDER-BOTTOM: #dcdcdc 0px solid; 
+				BORDER-RIGHT: #dcdcdc 1px solid;
+        BORDER-TOP: #dcdcdc 1px solid;
+        BORDER-LEFT: #dcdcdc 1px solid;
 			}
 			.TableHeader {
 				background: #efefef;
@@ -128,11 +176,24 @@
 				font-weight: bold;
 				horizontal-align: center;
 			}
+      
+      a.regular{
+        color:blue;
+      }
 			a:visited {
-				color: #0000ff;
+				color:inherit;
 			}
 			a {
 			}
+      a.link {
+        color:blue;
+      }
+      a.link:active {
+        color:blue;
+      }
+      a.link:visited {
+        color:blue;
+      }
 			a.summarie {
 				color:#000;
 				text-decoration: none;
@@ -153,6 +214,10 @@
 				font-weight:normal;
 			}   
       a.Pass {
+				font-weight:bold; 
+				color:green;
+			}
+      a.Pass:link {
 				font-weight:bold; 
 				color:green;
 			}
@@ -274,15 +339,14 @@
 	<!-- ================================================================== -->
 	<xsl:template name="packagelist">	
 		<h2 id=":i18n:TestSuiteSummary">TestSuite Summary</h2>
-		<table border="0" cellpadding="2" cellspacing="0" width="95%">
+		<table>
 			<xsl:call-template name="packageSummaryHeader"/>
 			<!-- list all packages recursively -->
 			<xsl:for-each select="//test-suite[(child::results/test-case)]">
 				<xsl:sort select="@name"/>
 				<xsl:variable name="testCount" select="count(child::results/test-case)"/>
-				<xsl:variable name="errorCount" select="count(child::results/test-case[@executed='False'])"/>
-				<xsl:variable name="failureCount" select="count(child::results/test-case[@success='False'])"/>
-				<xsl:variable name="runCount" select="$testCount - $errorCount - $failureCount"/>
+				<xsl:variable name="errorCount" select="count(child::results/test-case[@result='Failure'])"/>
+				<xsl:variable name="failureCount" select="count(child::results/test-case[@result='Error'])"/>
 				<xsl:variable name="timeCount" select="translate(@time,',','.')"/>
 		
 				<!-- write a summary for the package -->
@@ -305,34 +369,17 @@
 						<xsl:value-of select="@name"/>
 						</a>
 					</td>
-          <td width="10%"><xsl:value-of select="$runCount"/></td>
-					<td width="10%"><xsl:value-of select="$errorCount"/></td>
+          <td width="10%"><xsl:value-of select="$testCount"/></td>					
 					<td width="10%"><xsl:value-of select="$failureCount"/></td>
+          <td width="10%"><xsl:value-of select="$errorCount"/></td>
 					<td nowrap="nowrap" width="10%" align="right">
-						<xsl:variable name="successRate" select="$runCount div $testCount"/>
+						<xsl:variable name="successRate" select="($testCount - $errorCount - $failureCount) div $testCount"/>
 						<b>
 						<xsl:call-template name="display-percent">
 							<xsl:with-param name="value" select="$successRate"/>
 						</xsl:call-template>
 						</b>
 					</td>
-					<!--<td>
-						<xsl:if test="round($runCount * 200 div $testCount )!=0">
-							<span class="covered">
-								<xsl:attribute name="style">width:<xsl:value-of select="round($runCount * 200 div $testCount )"/>px</xsl:attribute>
-							</span>
-						</xsl:if>
-						<xsl:if test="round($errorCount * 200 div $testCount )!=0">
-						<span class="ignored">
-							<xsl:attribute name="style">width:<xsl:value-of select="round($errorCount * 200 div $testCount )"/>px</xsl:attribute>
-						</span>
-						</xsl:if>
-						<xsl:if test="round($failureCount * 200 div $testCount )!=0">
-							<span class="uncovered">
-								<xsl:attribute name="style">width:<xsl:value-of select="round($failureCount * 200 div $testCount )"/>px</xsl:attribute>
-							</span>
-						</xsl:if>
-					</td>-->
 					<td width="10%" align="right">
             <xsl:call-template name="display-time">
               <xsl:with-param name="value" select="$timeCount"/>
@@ -349,9 +396,9 @@
 			<xsl:sort select="@name"/>
 			<!-- create an anchor to this class name -->
 			<a name="#{generate-id(@name)}"></a>
-			<h3>TestSuite <xsl:value-of select="@name"/></h3>
-
-			<table border="0" cellpadding="1" cellspacing="1" width="95%">
+			<h3><span id=":i18n:TestSuit">TestSuite </span><xsl:value-of select="@name"/></h3>
+      
+			<div class="thin">
 				<!-- Header -->
 				<xsl:call-template name="classesSummaryHeader"/>
 
@@ -359,8 +406,8 @@
 				<xsl:apply-templates select="results/test-case">
 				   <xsl:sort select="@name" /> 
 				</xsl:apply-templates>
-			</table>
-			<a href="#top" id=":i18n:Backtotop">Back to top</a>
+			</div>
+			<a href="#top" class="link" id=":i18n:Backtotop">Back to top</a>
 		</xsl:for-each>
 	</xsl:template>
 	
