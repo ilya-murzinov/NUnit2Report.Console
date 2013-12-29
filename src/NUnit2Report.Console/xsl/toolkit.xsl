@@ -97,7 +97,7 @@
     <h1>
       <span id=":i18n:UnitTestsResults">Unit Tests Results</span> <xsl:value-of select="$nant.project.name"/>
     </h1>
-    <table class="noborder">
+    <table class="noborderHeader">
       <tr>
         <td class="noborder" width="50%" align="left">
           <span id=":i18n:GeneratedBy">Generated  on: </span><xsl:value-of select="@date"/> - <xsl:value-of select="concat(@time,' ')"/> <a href="#envinfo" class="link" id=":i18n:EnvironmentInformation">Environment Information</a>

@@ -55,6 +55,15 @@
         cellspasing:0;
       }
       
+      table.noborderHeader{
+        BORDER-BOTTOM: #dcdcdc 0px solid; 
+				BORDER-RIGHT: #dcdcdc 0px solid;
+        BORDER-TOP: #dcdcdc 0px solid;
+        BORDER-LEFT: #dcdcdc 0px solid;
+        padding-left:0px;
+        padding-right:0px;
+      }
+      
       table.noborder{
         width:100%;
         BORDER-BOTTOM: #dcdcdc 0px solid; 
