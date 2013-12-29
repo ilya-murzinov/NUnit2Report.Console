@@ -36,7 +36,12 @@
 -->
   <xsl:template name="display-time">
     <xsl:param name="value"/>
-    <xsl:value-of select="format-number($value,'0.000')"/>
+    <xsl:choose>
+      <xsl:when test="format-number($value,'0.000')='NaN'">
+        <xsl:value-of select="format-number(0.000,'0.000')"/>
+      </xsl:when>
+      <xsl:otherwise><xsl:value-of select="format-number($value,'0.000')"/></xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <!--
@@ -201,7 +206,7 @@
       <xsl:variable name="failures" select="@errors"/>
       <xsl:variable name="errors" select="@not-run"/>
       <xsl:variable name="timeCount" select="translate(test-suite/@time,',','.')"/>
-      <xsl:variable name="successRate" select="($total - $failures) div ($total + $errors)"/>
+      <xsl:variable name="successRate" select="($total - $failures - $errors) div ($total + $errors)"/>
 
       <table>
         <xsl:call-template name="summaryHeader"/>
@@ -231,10 +236,16 @@
               <xsl:with-param name="value" select="$successRate"/>
             </xsl:call-template>
           </td>
-          <td  width="10%" align="right">
+          <td  width="10%" align="right">            
             <xsl:call-template name="display-time">
-              <xsl:with-param name="value" select="$timeCount"/>
+              <xsl:with-param name="value">
+                <xsl:choose>
+                  <xsl:when test="$timeCount='NaN'">-</xsl:when>
+                  <xsl:otherwise>$timeCount</xsl:otherwise>
+                </xsl:choose>
+              </xsl:with-param>                
             </xsl:call-template>
+            
           </td>
         </tr>
       </table>
@@ -319,13 +330,13 @@
           </xsl:otherwise>
         </xsl:choose>
       </td>
-      <td class="nobottom" width="10%">
+      <td class="nobottom" width="10%" align="right">
         <xsl:attribute name="id">
           :i18n:<xsl:value-of select="$result"/>
         </xsl:attribute>
         <xsl:value-of select="$result"/>
       </td>
-      <td class="nobottom" width="10%">
+      <td class="nobottom" width="10%" align="right">
         <xsl:call-template name="display-time">
           <xsl:with-param name="value" select="@time"/>
         </xsl:call-template>
