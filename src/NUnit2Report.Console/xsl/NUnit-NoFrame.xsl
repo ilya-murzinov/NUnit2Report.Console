@@ -32,10 +32,10 @@
       
       div.outer{
         width:99%;
-        border: #bcd7cd 4px solid;
+        border: #bcd7cd 4px groove;
       }
       div.inner{
-        padding-left:6px;
+        padding-left:7px;
         width:99%;
         margin-bottom:10px;
         margin-top:10px;
@@ -51,7 +51,6 @@
       div.innerHeader{
         width:99%;
         margin-bottom:10px;
-        margin-top:10px;
       }
       
       div.space{
@@ -157,27 +156,27 @@
 				margin-bottom:0em;
 			}
 			h1 {
-				MARGIN: 0px 0px 2px; 
+				MARGIN: 0px 0px 5px; 
 				FONT: bold 200% verdana,arial,helvetica;
 			}
 			h2 {
-				MARGIN: 0px 0px 2px; 
+				MARGIN: 10px 0px 5px; 
 				FONT: bold 145% verdana,arial,helvetica;
 			}
 			h3 {
-				MARGIN: 0px 0px 2px;  
+				MARGIN: 10px 0px 5px;  
 				FONT: bold 115% verdana,arial,helvetica;
 			}
 			h4 {
-				MARGIN: 0px 0px 2px; 
+				MARGIN: 10px 0px 5px; 
 				FONT: bold 100% verdana,arial,helvetica;
 			}
 			h5 {
-        MARGIN: 0px 0px 2px;
+        MARGIN: 10px 0px 5px;
 				FONT: bold 100% verdana,arial,helvetica
 			}
 			h6 {
-				MARGIN: 0px 0px 2px; 
+				MARGIN: 10px 0px 5px; 
 				FONT: bold 100% verdana,arial,helvetica
 			}	
       .exception{
@@ -465,7 +464,7 @@
             <xsl:sort select="@name" />
           </xsl:apply-templates>
         </div>
-        <a href="#top" class="link" id=":i18n:Backtotop">Back to top</a>
+        <a style="margin-bottom:10px;" href="#top" class="link" id=":i18n:Backtotop">Back to top</a>
       </xsl:for-each>
     </div>
 	</xsl:template>
