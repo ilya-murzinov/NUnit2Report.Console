@@ -427,8 +427,7 @@
         </xsl:for-each>
       </table>
     </div>
-	</xsl:template>
-	
+	</xsl:template>	
 
 	<xsl:template name="testsuites">
     <div class="inner">
