@@ -25,20 +25,6 @@ namespace NUnit2Report.Console
     public class Options
     {
         /// <summary>
-        /// If <c>true</c> the report will be created using frames, default value is <c>false</c>
-        /// </summary>
-        [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = JustificationForTheFieldsMustBePrivate)]
-        [Option("f", "frames", MutuallyExclusiveSet = "Format", HelpText = "[--frames] ([-f] short version) Indicates the report will be built using frames. Default value is: 'false'")]
-        public bool Frames = false;
-
-        /// <summary>
-        /// If <c>true</c> the report will be created without frames, default value is <c>true</c>
-        /// </summary>
-        [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = JustificationForTheFieldsMustBePrivate)]
-        [Option("n", "noframes", MutuallyExclusiveSet = "Format", HelpText = "[--noframes] ([-n] short version) Indicates the report will be built without using frames. Default value is: 'true'")]
-        public bool NoFrames = false;
-
-        /// <summary>
         /// Specifies the output language of the report
         /// </summary>
         [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = JustificationForTheFieldsMustBePrivate)]

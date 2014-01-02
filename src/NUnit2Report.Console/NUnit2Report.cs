@@ -57,14 +57,9 @@ namespace NUnit2Report.Console
         private const string DefaultOutputDirectoryName = ".\\DefaultReport";
 
         /// <summary>
-        /// XSL Frame definition file name
-        /// </summary>
-        private const string XslFrameDefinitionFileName = "NUnit-Frame.xsl";
-
-        /// <summary>
         /// Xsl NoFrame definition file name
         /// </summary>
-        private const string XslNoFrameDefinitionFileName = "NUnit-NoFrame.xsl";
+        private const string XslDefinitionFileName = "NUnit.xsl";
 
         /// <summary>
         /// XSL Globalization definition file name
@@ -95,14 +90,9 @@ namespace NUnit2Report.Console
         private string toolPath;
 
         /// <summary>
-        /// Represents the Xsl Frames definiton file path (Full path)
-        /// </summary>
-        private string xslFrameDefintionFilePath;
-
-        /// <summary>
         /// Rrepresents the Xsl NoFrames definition file path (full path)
         /// </summary>
-        private string xslNoFrameDefinitionFilePath;
+        private string xslDefinitionFilePath;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NUnit2Report"/> class.
@@ -112,7 +102,6 @@ namespace NUnit2Report.Console
         {
             Condition.Requires(xmlNUnitResultFiles).IsNotNull().IsNotEmpty();
 
-            this.Format = ReportFormat.NoFrames;
             this.Language = ReportLanguage.English;
             this.XmlNUnitResultFiles = xmlNUnitResultFiles;
             this.OpenDescription = false;
@@ -120,12 +109,6 @@ namespace NUnit2Report.Console
             this.toolPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase);
             this.xslGlobalizationDefinitionFilePath = Path.Combine(this.toolPath, "xsl\\" + XslGlobalizationDefinitionFileName);
         }
-
-        /// <summary>
-        /// Gets or sets the format of the generated report.
-        /// Default to "noframes".
-        /// </summary>
-        public ReportFormat Format { get; set; }
 
         /// <summary>
         /// Gets or sets the output language.
@@ -166,142 +149,7 @@ namespace NUnit2Report.Console
 
             this.commonXsltArguments = this.GetCommonXsltProperties();
             this.xmlSummaryDocument = this.CreateSummaryXmlDoc();
-
-            switch (this.Format)
-            {
-                case ReportFormat.Frames:
-                    this.CreateFramesReport();
-                    break;
-                case ReportFormat.NoFrames:
-                    this.CreateNoFramesReport();
-                    break;
-            }
-        }
-
-        /// <summary>
-        /// Creates the frames report.
-        /// </summary>
-        private void CreateFramesReport()
-        {
-#if ECHO_MODE
-			Console.WriteLine ("Initializing execution ...");
-#endif
-
-            // create the index.html
-            var stream = new StringReader("<xsl:stylesheet xmlns:xsl='http://www.w3.org/1999/XSL/Transform' version='1.0' >" +
-                "<xsl:output method='html' indent='yes' encoding='utf-8'/>" +
-                "<xsl:include href=\"" + this.xslFrameDefintionFilePath + "\"/>" +
-                "<xsl:template match=\"test-results\">" +
-                "   <xsl:call-template name=\"index.html\"/>" +
-                " </xsl:template>" +
-                " </xsl:stylesheet>");
-            this.Write(stream, Path.Combine(this.OutputDirectory, this.OutputFilename));
-
-            // create the stylesheet.css
-            stream = new StringReader("<xsl:stylesheet xmlns:xsl='http://www.w3.org/1999/XSL/Transform' version='1.0' >" +
-                "<xsl:output method='html' indent='yes' encoding='utf-8'/>" +
-                "<xsl:include href=\"" + this.xslFrameDefintionFilePath + "\"/>" +
-                "<xsl:template match=\"test-results\">" +
-                "   <xsl:call-template name=\"stylesheet.css\"/>" +
-                " </xsl:template>" +
-                " </xsl:stylesheet>");
-            this.Write(stream, Path.Combine(this.OutputDirectory, "stylesheet.css"));
-
-            // create the overview-summary.html at the root
-            stream = new StringReader("<xsl:stylesheet xmlns:xsl='http://www.w3.org/1999/XSL/Transform' version='1.0' >" +
-                "<xsl:output method='html' indent='yes' encoding='utf-8'/>" +
-                "<xsl:include href=\"" + this.xslFrameDefintionFilePath + "\"/>" +
-                "<xsl:template match=\"test-results\">" +
-                "    <xsl:call-template name=\"overview.packages\"/>" +
-                " </xsl:template>" +
-                " </xsl:stylesheet>");
-            this.Write(stream, Path.Combine(this.OutputDirectory, "overview-summary.html"));
-
-            // create the allclasses-frame.html at the root
-            stream = new StringReader("<xsl:stylesheet xmlns:xsl='http://www.w3.org/1999/XSL/Transform' version='1.0' >" +
-                "<xsl:output method='html' indent='yes' encoding='utf-8'/>" +
-                "<xsl:include href=\"" + this.xslFrameDefintionFilePath + "\"/>" +
-                "<xsl:template match=\"test-results\">" +
-                "    <xsl:call-template name=\"all.classes\"/>" +
-                " </xsl:template>" +
-                " </xsl:stylesheet>");
-            this.Write(stream, Path.Combine(this.OutputDirectory, "allclasses-frame.html"));
-
-            // create the overview-frame.html at the root
-            stream = new StringReader("<xsl:stylesheet xmlns:xsl='http://www.w3.org/1999/XSL/Transform' version='1.0' >" +
-                "<xsl:output method='html' indent='yes' encoding='utf-8'/>" +
-                "<xsl:include href=\"" + this.xslFrameDefintionFilePath + "\"/>" +
-                "<xsl:template match=\"test-results\">" +
-                "    <xsl:call-template name=\"all.packages\"/>" +
-                " </xsl:template>" +
-                " </xsl:stylesheet>");
-            this.Write(stream, Path.Combine(this.OutputDirectory, "overview-frame.html"));
-
-            // Create directory
-            string path;
-
-            // --- Change 11/02/2003 -- remove
-            ////XmlDocument doc = new XmlDocument();
-            ////doc.Load("result.xml"); _FileSetSummary
-            // ---
-
-            ////doc.CreateNavigator();
-            var xpathNavigator = this.xmlSummaryDocument.CreateNavigator();
-
-            // Get All the test suite containing test-case.
-            if (xpathNavigator != null)
-            {
-                var expr = xpathNavigator.Compile("//test-suite[(child::results/test-case)]");
-                var iterator = xpathNavigator.Select(expr);
-                string directory;
-
-                while (iterator.MoveNext())
-                {
-                    var xpathNavigator2 = iterator.Current;
-                    var testSuiteName = iterator.Current.GetAttribute("name", string.Empty);
-
-                    // Get get the path for the current test-suite.
-                    var iterator2 = xpathNavigator2.SelectAncestors(string.Empty, string.Empty, true);
-                    path = string.Empty;
-                    var parent = string.Empty;
-                    var parentIndex = -1;
-
-                    while (iterator2.MoveNext())
-                    {
-                        directory = iterator2.Current.GetAttribute("name", string.Empty);
-                        if (directory != string.Empty && directory.IndexOf(".dll") < 0)
-                        {
-                            path = directory + "/" + path;
-                        }
-
-                        if (parentIndex == 1)
-                        {
-                            parent = directory;
-                        }
-
-                        parentIndex++;
-                    }
-
-                    // path = xx/yy/zz
-                    Directory.CreateDirectory(Path.Combine(this.OutputDirectory, path));
-
-                    // Build the "testSuiteName".html file
-                    // Correct MockError duplicate testName !
-                    // test-suite[@name='MockTestFixture' and ancestor::test-suite[@name='Assemblies'][position()=last()]]
-                    stream = new StringReader("<xsl:stylesheet xmlns:xsl='http://www.w3.org/1999/XSL/Transform' version='1.0' >" +
-                        "<xsl:output method='html' indent='yes' encoding='utf-8'/>" +
-                        "<xsl:include href=\"" + this.xslFrameDefintionFilePath + "\"/>" +
-                        "<xsl:template match=\"/\">" +
-                        "	<xsl:for-each select=\"//test-suite[@name='" + testSuiteName + "' and ancestor::test-suite[@name='" + parent + "'][position()=last()]]\">" +
-                        "		<xsl:call-template name=\"test-case\">" +
-                        "			<xsl:with-param name=\"dir.test\">" + string.Join(".", path.Split('/')) + "</xsl:with-param>" +
-                        "		</xsl:call-template>" +
-                        "	</xsl:for-each>" +
-                        " </xsl:template>" +
-                        " </xsl:stylesheet>");
-                    this.Write(stream, Path.Combine(Path.Combine(this.OutputDirectory, path), testSuiteName + ".html"));
-                }
-            }
+            this.CreateReport();
         }
 
         /// <summary>
@@ -311,16 +159,7 @@ namespace NUnit2Report.Console
         {
             this.OutputFilename = string.IsNullOrWhiteSpace(this.OutputFilename) ? DefaultOutputFileName : this.OutputFilename;
             this.OutputDirectory = string.IsNullOrWhiteSpace(this.OutputDirectory) ? DefaultOutputDirectoryName : this.OutputDirectory;
-
-            switch (this.Format)
-            {
-                case ReportFormat.NoFrames:
-                    this.xslNoFrameDefinitionFilePath = Path.Combine(this.toolPath, "xsl\\" + XslNoFrameDefinitionFileName);
-                    break;
-                case ReportFormat.Frames:
-                    this.xslFrameDefintionFilePath = Path.Combine(this.toolPath, "xsl\\" + XslFrameDefinitionFileName);
-                    break;
-            }
+            this.xslDefinitionFilePath = Path.Combine(this.toolPath, "xsl\\" + XslDefinitionFileName);
         }
 
         /// <summary>
@@ -399,11 +238,11 @@ namespace NUnit2Report.Console
         /// <summary>
         /// Creates the no frames report.
         /// </summary>
-        private void CreateNoFramesReport()
+        private void CreateReport()
         {
             var xslTransform = new XslCompiledTransform();
 
-            xslTransform.Load(this.xslNoFrameDefinitionFilePath, new XsltSettings(true, true), new XmlUrlResolver());
+            xslTransform.Load(this.xslDefinitionFilePath, new XsltSettings(true, true), new XmlUrlResolver());
 
             // tmpFirstTransformPath hold the first transformation
             var tmpFirstTransformPath = Path.GetTempFileName();

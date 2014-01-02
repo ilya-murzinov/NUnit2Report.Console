@@ -51,9 +51,9 @@ namespace NUnit2Report.Console
         /// <summary>
         /// Gets the arguments.
         /// </summary>
-        public IEnumerable<string> Arguments 
+        public IEnumerable<string> Arguments
         {
-            get { return this.arguments.AsEnumerable(); } 
+            get { return this.arguments.AsEnumerable(); }
         }
 
         /// <summary>
@@ -157,17 +157,6 @@ namespace NUnit2Report.Console
                     reportGenerator.Language = ReportLanguage.Russian;
                     break;
             }
-
-            if (this.Options.Frames) 
-            { 
-                reportGenerator.Format = ReportFormat.Frames; 
-            }
-
-            if (this.Options.NoFrames)
-            {
-                reportGenerator.Format = ReportFormat.NoFrames;
-            }
-
             return reportGenerator;
         }
     }

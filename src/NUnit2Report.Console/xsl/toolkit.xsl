@@ -40,7 +40,9 @@
       <xsl:when test="format-number($value,'0.000')='NaN'">
         <xsl:value-of select="format-number(0.000,'0.000')"/>
       </xsl:when>
-      <xsl:otherwise><xsl:value-of select="format-number($value,'0.000')"/></xsl:otherwise>
+      <xsl:otherwise>
+        <xsl:value-of select="format-number($value,'0.000')"/>
+      </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
 
@@ -194,17 +196,17 @@
 -->
   <xsl:template name="classesSummaryHeader">
     <table class="noborder">
-    <tr class="TableHeader" valign="top">
-      <td class="nobottom" width="80%">
-        <b id=":i18n:Name">Name</b>
-      </td>
-      <td class="nobottom" width="10%">
-        <b id=":i18n:Status">Status</b>
-      </td>
-      <td class="nobottom" width="10%" nowrap="nowrap">
-        <b id=":i18n:Time">Time(s)</b>
-      </td>
-    </tr>
+      <tr class="TableHeader" valign="top">
+        <td class="nobottom" width="80%">
+          <b id=":i18n:Name">Name</b>
+        </td>
+        <td class="nobottom" width="10%">
+          <b id=":i18n:Status">Status</b>
+        </td>
+        <td class="nobottom" width="10%" nowrap="nowrap">
+          <b id=":i18n:Time">Time(s)</b>
+        </td>
+      </tr>
     </table>
   </xsl:template>
 
@@ -274,11 +276,11 @@
               <xsl:with-param name="value" select="$successRate"/>
             </xsl:call-template>
           </td>
-          <td  width="10%" align="right">            
+          <td  width="10%" align="right">
             <xsl:call-template name="display-time">
-              <xsl:with-param name="value" select="$timeCount"/>    
+              <xsl:with-param name="value" select="$timeCount"/>
             </xsl:call-template>
-            
+
           </td>
         </tr>
       </table>
@@ -318,77 +320,77 @@
 
     <xsl:variable name="newid" select="generate-id(@name)" />
     <table class="noborder">
-    <tr class="noborder" valign="top">
-      <xsl:attribute name="class">
-        <xsl:value-of select="$result"/>
-      </xsl:attribute>
-
-      <td class="nobottom" width="80%">
-        <xsl:choose>
-          <xsl:when test="$summary.xml != ''">
-            <!-- Triangle image -->
-            <a title="Show/Hide XML Comment" class="summarie">
-              <xsl:attribute name="href">
-                javascript:Toggle('<xsl:value-of select="concat('M:',$newid)"/>');ToggleImage('<xsl:value-of select="concat('I:',$newid)"/>')
-              </xsl:attribute>
-              <xsl:attribute name="id">
-                <xsl:value-of select="concat('I:',$newid)"/>
-              </xsl:attribute>
-            </a>
-          </xsl:when>
-        </xsl:choose>
-        <!-- If failure, add click on the test method name and color red -->
-        <xsl:choose>
-          <xsl:when test="$result = 'Failure' or $result = 'Error'">
-            <a title="Show/Hide message error">
-              <xsl:attribute name="href">
-                javascript:Toggle('<xsl:value-of select="$newid"/>')
-              </xsl:attribute>
-              <xsl:attribute name="class">error</xsl:attribute>
-              <xsl:value-of select="nunit2report:TestCaseName(./@name)"/>
-            </a>
-          </xsl:when>
-          <xsl:when test="$result = 'Ignored'">
-            <a title="Show/Hide message error">
-              <xsl:attribute name="href">
-                javascript:Toggle('<xsl:value-of select="$newid"/>')
-              </xsl:attribute>
-              <xsl:attribute name="class">ignored</xsl:attribute>
-              <xsl:value-of select="nunit2report:TestCaseName(./@name)"/>
-            </a>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:attribute name="class">Pass</xsl:attribute>
-            <xsl:value-of select="nunit2report:TestCaseName(./@name)"/>
-          </xsl:otherwise>
-        </xsl:choose>
-      </td>
-      <td class="nobottom" width="10%" align="right">
-        <xsl:attribute name="id">
-          :i18n:<xsl:value-of select="$result"/>
+      <tr class="noborder" valign="top">
+        <xsl:attribute name="class">
+          <xsl:value-of select="$result"/>
         </xsl:attribute>
-        <xsl:value-of select="$result"/>
-      </td>
-      <td class="nobottom" width="10%" align="right">
-        <xsl:call-template name="display-time">
-          <xsl:with-param name="value" select="@time"/>
-        </xsl:call-template>
-      </td>
-    </tr>
 
-    <xsl:if test="$result != &quot;Pass&quot;">
-      <tr class="nobottom" style="display: none;">
-        <xsl:attribute name="id">
-          <xsl:value-of select="$newid"/>
-        </xsl:attribute>
-        <td colspan="4" class="FailureDetail">
-          <xsl:apply-templates select="./failure"/>
-          <xsl:apply-templates select="./error"/>
-          <xsl:apply-templates select="./reason"/>
+        <td class="nobottom" width="80%">
+          <xsl:choose>
+            <xsl:when test="$summary.xml != ''">
+              <!-- Triangle image -->
+              <a title="Show/Hide XML Comment" class="summarie">
+                <xsl:attribute name="href">
+                  javascript:Toggle('<xsl:value-of select="concat('M:',$newid)"/>');ToggleImage('<xsl:value-of select="concat('I:',$newid)"/>')
+                </xsl:attribute>
+                <xsl:attribute name="id">
+                  <xsl:value-of select="concat('I:',$newid)"/>
+                </xsl:attribute>
+              </a>
+            </xsl:when>
+          </xsl:choose>
+          <!-- If failure, add click on the test method name and color red -->
+          <xsl:choose>
+            <xsl:when test="$result = 'Failure' or $result = 'Error'">
+              <a title="Show/Hide message error">
+                <xsl:attribute name="href">
+                  javascript:Toggle('<xsl:value-of select="$newid"/>')
+                </xsl:attribute>
+                <xsl:attribute name="class">error</xsl:attribute>
+                <xsl:value-of select="nunit2report:TestCaseName(./@name)"/>
+              </a>
+            </xsl:when>
+            <xsl:when test="$result = 'Ignored'">
+              <a title="Show/Hide message error">
+                <xsl:attribute name="href">
+                  javascript:Toggle('<xsl:value-of select="$newid"/>')
+                </xsl:attribute>
+                <xsl:attribute name="class">ignored</xsl:attribute>
+                <xsl:value-of select="nunit2report:TestCaseName(./@name)"/>
+              </a>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:attribute name="class">Pass</xsl:attribute>
+              <xsl:value-of select="nunit2report:TestCaseName(./@name)"/>
+            </xsl:otherwise>
+          </xsl:choose>
+        </td>
+        <td class="nobottom" width="10%" align="right">
+          <xsl:attribute name="id">
+            :i18n:<xsl:value-of select="$result"/>
+          </xsl:attribute>
+          <xsl:value-of select="$result"/>
+        </td>
+        <td class="nobottom" width="10%" align="right">
+          <xsl:call-template name="display-time">
+            <xsl:with-param name="value" select="@time"/>
+          </xsl:call-template>
         </td>
       </tr>
-    </xsl:if>
-  </table>
+
+      <xsl:if test="$result != &quot;Pass&quot;">
+        <tr class="nobottom" style="display: none;">
+          <xsl:attribute name="id">
+            <xsl:value-of select="$newid"/>
+          </xsl:attribute>
+          <td colspan="4" class="FailureDetail">
+            <xsl:apply-templates select="./failure"/>
+            <xsl:apply-templates select="./error"/>
+            <xsl:apply-templates select="./reason"/>
+          </td>
+        </tr>
+      </xsl:if>
+    </table>
   </xsl:template>
 
   <!-- Note : the below template error and failure are the same style
