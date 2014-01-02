@@ -9,9 +9,9 @@
 
 -->
 
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0" xmlns:html="http://www.w3.org/Profiles/XHTML-transitional">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0" xmlns:html="http://www.w3.org/Profiles/XHTML-transitional">
 
-   <xsl:output method="html" indent="yes"/>
+   <xsl:output method="xhtml" indent="yes"/>
    <xsl:include href="toolkit.xsl"/>
    <xsl:preserve-space elements='a root'/>
 
@@ -33,6 +33,7 @@
       div.outer{
         width:99%;
         border: #bcd7cd 4px solid;
+        margin-top:20px;
       }
       div.inner{
         margin:0 auto;
@@ -51,12 +52,7 @@
       div.innerHeader{
         width:99%;
         margin-bottom:10px;
-      }
-      
-      div.space{
-        padding-top:20px;
-      }
-      
+      }      
       
 			span.covered {
 				background: #00df00; 
@@ -221,6 +217,7 @@
 				color:inherit;
 			}
 			a {
+        color:inherit;
 			}
       a.link {
         color:blue;
@@ -345,27 +342,18 @@
 			<a name="#top"></a>
       <div class="outerHeader">
       <xsl:call-template name="header"/>
-      </div>
-      <div class="space">
-      </div>
-      
+      </div>      
 			<!-- Summary part -->
       <div class="outer">
       <xsl:call-template name="summary"/>
-      </div>
-      <div class="space">
       </div>
 			<!-- Package List part -->
       <div class="outer">
       <xsl:call-template name="packagelist"/>
       </div>
-			<div class="space">
-      </div>
 			<!-- For each testsuite create the part -->
       <div class="outer">
         <xsl:call-template name="testsuites"/>
-      </div>
-      <div class="space">
       </div>
 			<!-- Environment info part -->
       <div class="outer">
