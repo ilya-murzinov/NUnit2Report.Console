@@ -223,7 +223,7 @@
       <h2 id=":i18n:Summary">Summary</h2>
       <xsl:variable name="name" select="@name"/>
       <xsl:variable name="total" select="@total"/>
-      <xsl:variable name="failures" select="@errors"/>
+      <xsl:variable name="failures" select="@failures+@errors"/>
       <xsl:variable name="errors" select="@not-run"/>
       <xsl:variable name="timeCount" select="translate(test-suite/@time,',','.')"/>
       <xsl:variable name="successRate" select="($total - $failures) div ($total + $errors)"/>
