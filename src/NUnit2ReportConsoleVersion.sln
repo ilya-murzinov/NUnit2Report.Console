@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Express 2013 for Windows Desktop
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{042F3325-7458-4DFE-A5A5-097CDD1254A4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildSolution", "Build\BuildSolution\BuildSolution.csproj", "{43CB472F-9676-4A19-9450-C967B4BA6DB0}"
@@ -13,7 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{BD2BC3
 	ProjectSection(SolutionItems) = preProject
 		..\Licence.txt = ..\Licence.txt
 		..\NUnit2ReportTask.Licence.txt = ..\NUnit2ReportTask.Licence.txt
-		..\README.txt = ..\README.txt
+		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
 Global

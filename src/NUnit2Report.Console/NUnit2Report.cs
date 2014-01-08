@@ -59,7 +59,7 @@ namespace NUnit2Report.Console
         /// <summary>
         /// Xsl NoFrame definition file name
         /// </summary>
-        private const string XslDefinitionFileName = "NUnit.xsl";
+        private const string XslDefinitionFileName = "ReportTemplate.xsl";
 
         /// <summary>
         /// XSL Globalization definition file name
