@@ -294,7 +294,7 @@
           font-weight:bold;
           }
           .good{
-          color:orange;
+          color:yellow;
           font-weight:bold;
           }
           .average{
