@@ -28,12 +28,12 @@
     TO DO
 	Corriger les alignement sur error
 	Couleur http://nanning.sourceforge.net/junit-report.html
--->
+  -->
 
   <!--
     format a number in to display its value in percent
     @param value the number to format
--->
+  -->
   <xsl:template name="display-time">
     <xsl:param name="value"/>
     <xsl:choose>
@@ -49,7 +49,7 @@
   <!--
     format a number in to display its value in percent
     @param value the number to format
--->
+  -->
   <xsl:template name="display-percent">
     <xsl:param name="value"/>
     <xsl:value-of select="format-number($value,'0.00 %')"/>
@@ -58,7 +58,7 @@
   <!--
     transform string like a.b.c to ../../../
     @param path the path to transform into a descending directory path
--->
+  -->
   <xsl:template name="path">
     <xsl:param name="path"/>
     <xsl:if test="contains($path,'.')">
@@ -95,7 +95,7 @@
   <!--
 	template that will convert a carriage return into a br tag
 	@param word the text from which to convert CR to BR tag
--->
+  -->
   <xsl:template name="br-replace">
     <xsl:param name="word"/>
     <xsl:choose>
@@ -116,7 +116,7 @@
 		=====================================================================
 		classes summary header
 		=====================================================================
--->
+  -->
   <xsl:template name="header">
     <xsl:param name="path"/>
     <div class="innerHeader">
@@ -165,7 +165,7 @@
 		=====================================================================
 		package summary header
 		=====================================================================
--->
+  -->
   <xsl:template name="packageSummaryHeader">
     <tr class="TableHeader" valign="top">
       <td width="50%">
@@ -193,7 +193,7 @@
 		=====================================================================
 		classes summary header
 		=====================================================================
--->
+  -->
   <xsl:template name="classesSummaryHeader">
     <table class="noborder">
       <tr class="TableHeader" valign="top">
@@ -217,7 +217,7 @@
 		User | Date | Environment | Tests | Failures | Errors | Rate | Time
 		Note : this template must call at the testsuites level
 		=====================================================================
--->
+  -->
   <xsl:template name="summary">
     <div class="inner">
       <h2 id=":i18n:Summary">Summary</h2>
@@ -292,7 +292,7 @@
 		=====================================================================
 		testcase report
 		=====================================================================
--->
+  -->
   <xsl:template match="test-case">
     <xsl:param name="summary.xml"/>
     <xsl:param name="open.description"/>
@@ -393,41 +393,11 @@
     </table>
   </xsl:template>
 
-  <!-- Note : the below template error and failure are the same style
-            so just call the same style store in the toolkit template -->
-  <!-- <xsl:template match="failure">
-	<xsl:call-template name="display-failures"/>
-</xsl:template>
-
-<xsl:template match="error">
-	<xsl:call-template name="display-failures"/>
-</xsl:template> -->
-
-  <!-- Style for the error and failure in the tescase template -->
-  <!-- <xsl:template name="display-failures">
-	<xsl:choose>
-		<xsl:when test="not(@message)">N/A</xsl:when>
-		<xsl:otherwise>
-			<xsl:value-of select="@message"/>
-		</xsl:otherwise>
-	</xsl:choose> -->
-  <!-- display the stacktrace -->
-  <!-- 	<code>
-		<p/>
-		<xsl:call-template name="br-replace">
-			<xsl:with-param name="word" select="."/>
-		</xsl:call-template>
-	</code> -->
-  <!-- the later is better but might be problematic for non-21" monitors... -->
-  <!--pre><xsl:value-of select="."/></pre-->
-  <!-- </xsl:template>
- -->
-
   <!--
 		=====================================================================
 		Environtment Info Report
 		=====================================================================
--->
+  -->
   <xsl:template name="envinfo">
     <div class="inner">
       <a name="envinfo"></a>
