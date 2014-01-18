@@ -3,4 +3,5 @@ NUnit2Report Console is a tool to transform the NUnit xml results file to an Htm
 You can find more information about this tool in:
 http://github.com/jupaol/NUnit2Report.Console/wiki
 
-This particular version of NUnit2Report.Console provides another HTML-report which is prettier then original.
+This particular version of NUnit2Report.Console provides another HTML-report which is prettier then original:
+![image](https://raw.github.com/ilya-murzinov/NUnit2Report.Console/master/Report%20example/Report%20Example.png)
